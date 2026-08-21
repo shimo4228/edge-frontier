@@ -5,7 +5,8 @@
 #   EI_DATE=2026-08-21 scripts/ingest.sh
 #
 # 設計: モデル (opus) は規準を「適用」するだけ。commit は script が行い、diff が
-# 追記のみ (削除行 0) であることを機械検査する。push は人間が行う。
+# 追記のみ (削除行 0) であることを機械検査し、別プロセスの fact-checker agent が
+# 一次 URL と照合して pass した場合だけ commit する。push は人間が行う。
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -139,12 +140,64 @@ if [ "$DELETED" != "0" ]; then
   exit 1
 fi
 
-# === commit (script が決定論的に。message は一時ファイル経由) ===
+# === 事実検証パス (別プロセス。fact-checker agent に委譲、inaccurate があれば commit しない) ===
+DIFF_FILE=$(mktemp "${TMPDIR:-/tmp}/edge-ingest-diff.XXXXXX")
 MSG_FILE=$(mktemp "${TMPDIR:-/tmp}/edge-ingest-msg.XXXXXX")
-trap 'rm -f "$MSG_FILE"' EXIT
+trap 'rm -f "$MSG_FILE" "$DIFF_FILE"' EXIT
+git diff -U0 -- cases.md reading-list.md | grep -E '^(\+\+\+|\+[^+])' > "$DIFF_FILE"
+log "=== fact-check pass ==="
+FC_PROMPT="システムプロンプトに追記された事実検証パスのプロトコルに従い、以下の diff ファイルを
+fact-checker agent に委譲して検証し、JSON だけを返してください。
+
+diff ファイル (絶対パス): $DIFF_FILE"
+FC_EXIT=0
+FC_JSON=$(cd "$REPO_DIR" && timeout 900 "$CLAUDE_CMD" -p "$FC_PROMPT" \
+  --permission-mode default \
+  --append-system-prompt-file "$SCRIPT_DIR/factcheck-protocol.md" \
+  --allowedTools "Read,Grep,WebSearch,WebFetch,Agent(fact-checker)" \
+  --max-turns 30 \
+  --model sonnet \
+  --output-format json \
+  --no-session-persistence \
+  < /dev/null 2>> "$LOG_FILE") || FC_EXIT=$?
+printf '%s\n' "$FC_JSON" >> "$LOG_FILE"
+FC_REPORT=$(printf '%s' "$FC_JSON" | python3 -c '
+import sys, json, re
+try:
+    d = json.load(sys.stdin)
+    if d.get("is_error"): sys.exit(2)
+    r = d.get("result", "")
+    blocks = re.findall(r"```[^\n]*\n(.*?)```", r, re.S)
+    v = json.loads((blocks[-1] if blocks else r).strip())
+except Exception as e:
+    print("fact-check: (結果を解釈できず — " + type(e).__name__ + ")"); sys.exit(3)
+lines = ["fact-check (%s): %s — checked=%s inaccurate=%d unverifiable=%d" % (
+    "fact-checker agent", v.get("verdict"), v.get("checked"), len(v.get("inaccurate", [])), len(v.get("unverifiable", [])))]
+for x in v.get("inaccurate", []):
+    lines.append("- INACCURATE [%s] %s — %s" % (x.get("file", "?"), x.get("claim"), x.get("evidence")))
+for x in v.get("unverifiable", []):
+    lines.append("- unverifiable: %s — %s" % (x.get("claim"), x.get("reason")))
+if v.get("note"): lines.append("- " + str(v["note"]))
+print("\n".join(lines))
+sys.exit(0 if v.get("verdict") == "pass" else 1)
+') ; FC_CLASS=$?
+printf '%s\n' "$FC_REPORT" | tee -a "$LOG_FILE"
+if [ "$FC_CLASS" = "1" ]; then
+  log "ERROR: fact-check fail — commit せず人間判断に回す (working tree に変更を残す)"
+  notify "ingest の事実検証が fail。台帳の変更は未コミットです" "edge-ingest error"
+  exit 1
+elif [ "$FC_CLASS" != "0" ]; then
+  # 検証パス自体の失敗 (timeout / 解釈不能) は fail-open にせず人間へ: 未検証の行を台帳に入れない
+  log "ERROR: fact-check pass could not run (exit $FC_EXIT) — commit せず人間判断に回す"
+  notify "ingest の事実検証パスが実行できませんでした。台帳の変更は未コミットです" "edge-ingest error"
+  exit 1
+fi
+
+# === commit (script が決定論的に。message は一時ファイル経由) ===
 {
   printf 'Ingest edge-line reports %s (auto, %s)\n\n' "$DATE" "$MODEL"
   printf '%s\n\n' "$BODY"
+  printf '%s\n\n' "$FC_REPORT"
   for f in "${PENDING[@]}"; do printf 'Ingest-Report: %s\n' "$(basename "$f")"; done
 } > "$MSG_FILE"
 git add cases.md reading-list.md
