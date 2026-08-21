@@ -20,7 +20,7 @@ AI 活用の**やり方**を常識外の強度・範囲まで push している�
 
 ## 観測ループ
 
-daily-research の `edge` line が毎日(daily = true、daily-research ADR-0013)この repo を cwd に外部観測し、事例を物語として解説するレポートを Obsidian vault へ出す。発見の台帳への還元(cases.md / reading-list.md / README)は運用者が手動 ingest で行う。良い事例が無い日は「なし」と短く書いてよい(発見ノルマなし)。
+daily-research の `edge` line が毎日(daily = true、daily-research ADR-0013)この repo を cwd に外部観測し、事例を物語として解説するレポートを Obsidian vault へ出す。発見の台帳への還元(cases.md / reading-list.md)は `scripts/ingest.sh` が毎朝自動で行う(launchd `com.shimomoto.edge-ingest.plist`、2026-08-21〜)。ingest は既存の入場条件と型を**適用するだけ**の run で、型の新設・入場条件の変更・既存行の書き換えは行わず、追記のみを commit する(削除行があれば commit せず人間へ回す)。収まらない事例は commit message の「候補」節に残り、規準そのものの見直し(型の再編・README)は人間が事例の蓄積を見て行う。push も人間。良い事例が無い日は「なし」と短く書いてよい(発見ノルマなし)。
 
 ## この構造は足場である
 

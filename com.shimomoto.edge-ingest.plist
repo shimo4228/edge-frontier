@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.shimomoto.edge-ingest</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/shimomoto_tatsuya/MyAI_Lab/edge-frontier/scripts/ingest.sh</string>
+  </array>
+
+  <!-- daily-research (05:00 起動、実測 50〜190 分) の後。レポートが無ければ即終了する -->
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>30</integer></dict>
+    <dict><key>Hour</key><integer>12</integer><key>Minute</key><integer>0</integer></dict>
+  </array>
+
+  <key>StandardOutPath</key>
+  <string>/Users/shimomoto_tatsuya/MyAI_Lab/edge-frontier/logs/launchd-stdout.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/shimomoto_tatsuya/MyAI_Lab/edge-frontier/logs/launchd-stderr.log</string>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/shimomoto_tatsuya/MyAI_Lab/edge-frontier</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/shimomoto_tatsuya/.local/bin:/Users/shimomoto_tatsuya/.claude/local:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <key>HOME</key>
+    <string>/Users/shimomoto_tatsuya</string>
+  </dict>
+</dict>
+</plist>
