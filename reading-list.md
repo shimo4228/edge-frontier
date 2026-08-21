@@ -4,6 +4,7 @@
 - LLM 界隈の論考は陳腐化が速い。日付ごと読むこと
 - 2026-08-20 初回 ingest: edge line レポート 2 本 (metrics-manufactured-edge / agent-wrote-the-autopsy) より。URL は run 内 WebFetch 解決済み
 - 2026-08-21 ingest: edge line レポート 1 本 (cognitive-surrender-selection-bias) より +7 本。URL は ingest run 内で再度 WebFetch 到達確認済み
+- 2026-08-22 ingest: edge line レポート 1 本 (first-person-needs-an-external-anchor) より +4 本。URL は ingest run 内で再度 WebFetch 到達確認済み
 
 ## 1. 突破系実践記
 
@@ -28,6 +29,9 @@
 - **Documented AI Agent Incidents** — METR (44 件、2026-05-19 更新)
   https://metr.org/agent-incidents/
   agent インシデントの独立収集。崩壊系の索引として定点価値
+- **I'm done using AI** — Brett Codes, brettcodes.com (2026-08-10)
+  https://brettcodes.com/im-done-using-ai/
+  Linear を Claude Code に繋ぎ一行も編集せずに non-trivial なプロジェクトを完成させるところまで到達した個人開発者が、技能退化・当事者性の喪失・鬱を理由に全面撤退した一人称。撤退後に書き上げた本と Rust 製 2D ゲームエンジン `Usagi`、Lobsters の 80 コメント (https://lobste.rs/s/rfiuko/i_m_done_using_ai) が記録の外側に残る照合点になっている。cases.md 7 件目の本体。損失の記述は節 3 のなみすけ・Frisby とほぼ同じなので並べて読む
 
 ## 3. 生活・認知系
 
@@ -55,6 +59,9 @@
 - **Wharton researchers coined 'cognitive surrender' to describe what happens when people let AI think for them** — Ana Maria Constantin, The Next Web (2026-06-20)
   https://thenextweb.com/news/wharton-cognitive-surrender-ai-chatbots-decisions-moot-app
   注意: **二次**。上記 BI と独立に Yoo を報じ、チャットボットを「セラピストとライフコーチの組み合わせ」と扱っていたとする。表記は "Carolyn Yoo" (BI 日本語版は「キャロリン・ユー」) — 翻訳層で固有名詞の同定可能性が落ちる例
+- **DP21577 The Generative AI Learning Penalty: Evidence from Chinese Secondary Education** — David Strömberg, Victor Lei & Yanhui Wu, CEPR Discussion Paper (2026-06-02)
+  https://cepr.org/publications/dp21577
+  注意: **査読前の working paper**。中国の中高生 26,811 名を 30 か月追跡したパネル。宿題の点数 +18% / 所要時間 −30% と短期には改善する一方、6 か月以内に月例試験 −20%、進学試験 −18〜−24% で、罰則が出切るまで約 2 年かかる。損失は宿題の外注に相当する行動を取った層に集中し、所要時間を保った生徒の損失は軽微。Anthropic の技能形成 RCT (上、n=52・即時測定・ベンダー実施) に対し n が 500 倍・非ベンダー・縦断という位置づけだが、対象は中等教育の宿題であって実務者のエッジ運用ではない
 
 ## 4. 方法論・メタ論(エッジから学ぶという方法自体)
 
@@ -70,3 +77,9 @@
 - **Running multiple AI Agents in parallel reminds me of working in Myanmar** — Gijs Verheijke, Playbook Musings (2026-01-14)
   https://gijs.substack.com/p/running-multiple-ai-agents-in-parallel
   並列数は 1〜3 で**端ではない** (台帳の入場条件からは外れる) が、並列運用のコストを人間側から測る比喩として読む価値がある — ミャンマーで 6Mbps を 30 人で分け合っていた頃と同じ作業感で、「すべての agent の状態を頭の中に保持しなければならず、注意を要するものへ次々とプロンプトを打ちに戻る絶え間ない文脈切り替えは brutal だ」。自己評価も率直で「output は確実に増えている。それがどの程度 slop なのかは open question だ」。並列数を指標にすることへの一人称の反証材料
+- **Honest Lying: Understanding Memory Confabulation in Reflexive Agents** — Prakhar Dixit, Sadia Kamal & Tim Oates, arXiv:2605.29463 (2026-05-28 v1 / 05-31 v2)
+  https://arxiv.org/abs/2605.29463
+  Reflexion 型 agent が自分の失敗を正しく診断できるという前提が体系的に破れることを示す。ALFWorld の凍結環境 16 個で **121 個の反省文のうち正しい対象物に言及したものが 0 個**、しかも「confident but incorrect」なまま試行を跨いで行動され続ける (著者らの呼称は memory confabulation)。緩和策で正解言及 0% → 86%、Reflection Repetition Rate 0.64 → 0.10。agent 著の一人称証言 (台帳 1 件目) を読むときの実験側の基準線
+- **A reduction in self-reported confidence accompanies the recall of memories distorted by prototypes** — Casper Kerrén, Yiming Zhao & Benjamin J. Griffiths, Communications Psychology (2024-07-01)
+  https://pmc.ncbi.nlm.nih.gov/articles/PMC11332036/
+  6 実験 (物体と色 / 物体と位置の連合学習) で、記憶がプロトタイプ方向に歪んだとき自己報告の確信度が下がることを示し、確信の欠如が歪みを招くのではなく歪みが確信を下げる向きだと結論する。人間の回顧記録も歪むが**歪みの信号が文面に出る**側の証拠で、上の Honest Lying (confident but incorrect) と対で読む
