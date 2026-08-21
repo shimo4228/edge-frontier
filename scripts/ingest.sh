@@ -82,6 +82,7 @@ $REPORT_LIST"
 
 ALLOWED="Read,Glob,Grep,WebFetch,Edit(//${REPO_DIR#/}/cases.md),Edit(//${REPO_DIR#/}/reading-list.md)"
 
+STATUS_BEFORE=$(git -C "$REPO_DIR" status --porcelain)
 log "=== ingest $DATE: ${#PENDING[@]} report(s), model=$MODEL ==="
 EXIT=0
 RESULT_JSON=$(cd "$REPO_DIR" && timeout 1200 "$CLAUDE_CMD" -p "$PROMPT" \
@@ -103,7 +104,11 @@ except Exception:
     sys.exit(2)
 if d.get("is_error"):
     sys.exit(2)
-print(d.get("result", ""))
+r = d.get("result", "")
+# output style 等の前置きが混入しても、コードフェンスがあれば最後のフェンス内だけを採る
+import re
+blocks = re.findall(r"```[^\n]*\n(.*?)```", r, re.S)
+print((blocks[-1] if blocks else r).strip())
 ') || { log "ERROR: claude run failed (exit $EXIT)"; notify "ingest の claude 実行が失敗しました" "edge-ingest error"; exit 1; }
 SUMMARY=$(printf '%s' "$RESULT_JSON" | python3 -c '
 import sys, json
@@ -114,7 +119,8 @@ log "claude done: $SUMMARY"
 
 # === diff 検査: 台帳 2 ファイル以外に変更が無く、削除行 0 (追記のみ) ===
 cd "$REPO_DIR"
-OTHER=$(git status --porcelain | grep -vE '^ M (cases|reading-list)\.md$' || true)
+OTHER=$(comm -13 <(printf '%s\n' "$STATUS_BEFORE" | sort) <(git status --porcelain | sort) \
+  | grep -vE '^ M (cases|reading-list)\.md$' || true)
 if [ -n "$OTHER" ]; then
   log "ERROR: 台帳以外に変更がある:"; printf '%s\n' "$OTHER" | tee -a "$LOG_FILE"
   notify "ingest が台帳以外を変更しました。手で確認してください" "edge-ingest error"
