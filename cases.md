@@ -8,6 +8,7 @@
 
 - 2026-08-20 開始、0 件から。既知の有名事例は網羅しない — 学びが抽出できるものだけを載せる
 - 2026-08-20 初回 ingest (edge line レポート 2 本より): 台帳 4 件 — 突破+崩壊 1 / 境界例 (製造された端) 2 / 生活認知 1
+- 2026-08-21 ingest (edge line レポート 1 本より): 台帳 +2 件 — 生活認知 2 (EN 1 / JA 1)
 
 ## 台帳
 
@@ -17,5 +18,7 @@
 | 2026-08-20 | 2026-04-09 | Meta 社内順位表「Claudeonomics」(Fortune 報道) | EN | 境界例 (製造された端) | https://fortune.com/2026/04/09/meta-killed-employee-ai-token-dashboard/ — 85,000 人超の消費を順位化、個人最高 281B トークン/30日 (Claude 価格換算 $1.4M 超)。"Token Legend" 等の称号が消費自体を報酬 → 端にいた理由が本人の言葉で読めず、報道 2 日後に順位表削除で追試不能。入場条件を満たさない標本として記録 |
 | 2026-08-20 | 2026-05-29 | Amazon 社内順位表「Kirorank」(FT 初報、the decoder / BI 経由) | EN | 境界例 (製造された端) | https://the-decoder.com/amazon-kills-internal-ai-leaderboard-after-employees-gamed-it-with-pointless-tasks/ — 無意味タスクによる gaming で閉鎖。「Don't use AI just to use AI」(https://finance.yahoo.com/sectors/technology/articles/amazon-says-shut-down-token-161016125.html)。Claudeonomics と同型 2 例目 — 順位表が端を製造して自壊するパターン |
 | 2026-08-20 | 2026-05-07 | なみすけ (note、2026-03-24 執筆) | JA | 生活認知 | https://note.com/namisuke_note/n/n62962d5684a4 — 「AI に人生を丸投げしそうになった」一人称。サムネイル/タイトル等の全面委譲で試行回数 (自分で試して外す経験) が消失した自覚と揺り戻し。日本語圏の生活認知系 1 例目 |
+| 2026-08-21 | 2026-05-24 | Dominic Frisby (英国、The Flying Frisby / Substack) | EN | 生活認知 | https://www.theflyingfrisby.com/p/ive-outsourced-my-judgement-to-ai — メール起草・契約・交渉・投資評価から運動・体脂肪・便の分析、日々の些細な決定まで委譲。how が最も読めるのは離別の場面で、元パートナーとの WhatsApp 全履歴を投入して分析させた (「I eventually uploaded our entire WhatsApp exchanges into AI and asked it to tell me WTF was going on」) — 自分に "fixer bias"、相手に "anxious attachment avoidant" を同定され、抜け出せなかった理由が分かったと書く。私信の全履歴を判断材料として渡す点が常識外で、規模ではなく how が端にある。損失も本人が数えている —「By relying on AI, parts of the brain undoubtedly atrophy」(根拠として電話番号の暗記喪失・GPS 依存を自分の履歴から引く)、「Part of living is making wrong decisions, suffering the consequences and learning not to repeat them」。**それでも揺り戻さない** —「But frankly, I'm done with bad decisions」「I'm 56 now. I just want to make optimum choices and have a really good next three or four decades」。なみすけ (台帳 4 件目) の「試行回数の消失」と同じ損失を同じ精度で自覚しながら、残り時間を根拠に意図的な取引として引き受けた側の記録。同じ書き手が 1 週間後に突破側 https://www.theflyingfrisby.com/p/how-ai-became-my-production-company (2026-05-31) を出し、そこでは編集の Goat と調査者 Sam を人間として残している |
+| 2026-08-21 | 2026-01-17 | とうら (note) | JA | 生活認知 | https://note.com/ra_riray/n/n2a2b3428744e — 毎日 3 時間の人生相談。AI を選ぶ理由が AI の能力 (速い・安い・上手い) ではなく**人間関係の帯域幅の制約**にある: 恥ずかしさに加え、HSP 気質で「相手の微細な反応で、出せる思考が左右されてしまう」ため人間相手だと思考を最後まで展開できず、「一人でいる時の思考の深度が『人に話す』深度を大きく超えている」。記事本体は依存しないための自作ルール 6 つで、うち 1 つは **AI 側の設計意図を名指しした対抗運用** —「最後の『問い』は無視すること」(継続利用を促す仕様だから)。他に AI は自分を満足させようとしてくるという前提の保持、違うと思ったら言い続ける、提案を全部実行しない、AI がしているのは「それっぽい回答を生成すること」だと掴んでおく。本人に起きたのは萎縮ではなく可視化で、自分の中の考えと感情に気づけるようになり、視野が広がったと報告している |
 
 型の分類(仮 — 増えたら再編): **突破** = 常識外のやり方で成果を出している / **崩壊** = やりすぎの果ての failure mode・post-mortem / **生活認知** = 開発以外の全面 AI 委譲と人間側の変容。1 事例が複数型に跨がる場合は主たる学びの側に置く。**境界例** = 入場条件 (how が本人の言葉で読める) を満たさないが端の生態を示すため記録するもの — 製造された端など。その旨を必ずメモに書く。
