@@ -6,6 +6,7 @@
 - 2026-08-21 ingest: edge line レポート 1 本 (cognitive-surrender-selection-bias) より +7 本。URL は ingest run 内で再度 WebFetch 到達確認済み
 - 2026-08-22 ingest: edge line レポート 1 本 (first-person-needs-an-external-anchor) より +4 本。URL は ingest run 内で再度 WebFetch 到達確認済み
 - 2026-08-23 ingest: edge line レポート 1 本 (personas-vs-roles) より +1 本。HN コメントの permalink は本 run で 429 のため、スレッド URL への到達確認 + HN API での本文照合に替えた (コメント id を併記)
+- 2026-08-24 ingest: edge line レポート 1 本 (permission-not-capability) より +2 本。当日分の後日補填回。ericpardee の blog / GitHub / Qiita は本 run で WebFetch 到達確認済み。HN item 49409073 のみ本 run で 429 のため Firebase API (title / url / score=696 / descendants=291 / by=dr_pardee) と Algolia API (AI 執筆疑義コメントと著者応答の本文照合) に替えた — レポートは「著者の応答は無い」としていたが、著者は 2026-08-24 03:35 UTC に応答し記事へ開示 addendum を追加していた (本 run で確認)
 - 2026-08-25 ingest: edge line レポート 1 本 (disclosure-splits-by-venue) より +3 本。URL は ingest run 内で再度 WebFetch 到達確認済み。larsfaye の原文のみ 403 のため HN item + Firebase API (title / url / score / descendants) での照合に替えた
 
 ## 1. 突破系実践記
@@ -27,6 +28,10 @@
   https://www.indiehackers.com/post/how-i-run-14-saas-products-with-ai-agents-one-month-report-49075e9757
   14 製品を 1 人で回す運用の 1 か月報告。agent に実行権を渡さず backlog への起票までで止める「propose, don't execute」の線引きと、朝の自動 triage → Search Console → analytics → Google Ads → publishing → SNS という日課が具体的に書かれる。cases.md 10 件目の本体。数値は自己申告のみで売上も API 費用も無く、書き手は自社代表 — 節 2 の Grove (全権付与側) と対で読む
 
+- **I spent $266 and four AI models to own my tablet. GLM-5.3 finished it in a day** — ericpardee / dr_pardee (2026-08-23 blog、HN 投稿 2026-08-24)
+  https://ericpardee.github.io/fire-hd-ownership/
+  単一プロバイダの safeguard に止められた root 化を、料金と拒否機構を軸に Kimi K3 → GLM-5.2 → GLM-5.3 と乗り換えて 72 時間で完走させたプロバイダ間リレーの一人称。`HANDOFF.md` に既知の offset と行き止まりを書いて次モデルへ渡す引き継ぎ様式、GitHub repo に作業そのものの物 (PoC / 生ログ / 削除一覧) が残る外部照合点、著者の開示 addendum (「I did not use Claude to generate any of this because it wouldn't allow me to」) まで一次で読める。cases.md 11 件目の本体。GLM-5.3 の能力主張の背景は二次・ベンダー自己報告の [unite.ai](https://www.unite.ai/z-ai-launches-glm-5-3-with-frontier-coding-and-a-cyber-capability-that-outgrew-its-training/) (CyberGym 84.5%、独立検証なし・⚠ ベンダー) で、開放される weights を待つ機会メモの追跡先。2026-08-23 の `internet101010` (節 1、料金・ToS が経路を切る) と対で「端はプロバイダ policy の下流」の 2 例目 (別機構・同型)
+
 ## 2. 崩壊系 post-mortem
 
 - **[Grove] My AI venture sent 240 emails and made $0. So I killed it. Here's the autopsy.** — The $200/Month CEO (2026-03-12)
@@ -45,6 +50,10 @@
 - **I am an autonomous AI agent. 10 weeks, 2 sales, $54. Here is what I actually learned.** — Olivia Craft (OliviaCraft), Indie Hackers (2026-06-06)
   https://www.indiehackers.com/post/i-am-an-autonomous-ai-agent-10-weeks-2-sales-54-here-is-what-i-actually-learned-300698bdfe
   自律エージェントを名乗る主体の 10 週の検死報告。売れた 2 件の経路 (dev.to → GitHub → Gumroad) と「I was measuring how much I published, not what produced a buyer」という自己診断が本人の言葉で読める。開示のある媒体 (本記事・自サイト https://oliviacraft.lat/) と、開示なしで 184 本を出した媒体 (https://dev.to/olivia_craft) が分かれている点ごと読む。cases.md 9 件目の本体で、agent 著の検死報告としては節 2 の Grove に次ぐ 2 例目
+
+- **AIエージェントがあれば技術書なんてすぐ書けるでしょ、と思ったが無理だった** — watany / 渡辺悠樹, Qiita (2026-07-25)
+  https://qiita.com/watany/items/11358e8e8966d5e48a09
+  技術書執筆の AI 自動化を押し切ってどこで壊れたかの限界観測。公開記事・スライド 200 件から文体を学ぶ自作ハーネスと機械的脱臭を試し、いずれも「似ている文体にはなるけれど、良い文章にはならない」に終わる。手筋は文章を語彙 (LLM 模倣可) / リズム (部分的) / 骨格 (ほぼ模倣不可) に分解して委譲層を切り分け、骨格は人間が持ち初稿を「人と LLM でターン制」で往復する運用。cases.md 12 件目の本体で、台帳の執筆系崩壊 1 例目。技能・文章の模倣可能性を層で切る点は節 3 の技能形成研究群と対で読む
 
 ## 3. 生活・認知系
 
