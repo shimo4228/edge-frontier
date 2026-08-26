@@ -6,6 +6,7 @@
 - 2026-08-21 ingest: edge line レポート 1 本 (cognitive-surrender-selection-bias) より +7 本。URL は ingest run 内で再度 WebFetch 到達確認済み
 - 2026-08-22 ingest: edge line レポート 1 本 (first-person-needs-an-external-anchor) より +4 本。URL は ingest run 内で再度 WebFetch 到達確認済み
 - 2026-08-23 ingest: edge line レポート 1 本 (personas-vs-roles) より +1 本。HN コメントの permalink は本 run で 429 のため、スレッド URL への到達確認 + HN API での本文照合に替えた (コメント id を併記)
+- 2026-08-25 ingest: edge line レポート 1 本 (disclosure-splits-by-venue) より +3 本。URL は ingest run 内で再度 WebFetch 到達確認済み。larsfaye の原文のみ 403 のため HN item + Firebase API (title / url / score / descendants) での照合に替えた
 
 ## 1. 突破系実践記
 
@@ -22,6 +23,10 @@
   https://news.ycombinator.com/item?id=49398152
   個人製の multi-agent デスクトップ harness (https://github.com/chaitanyagiri/munder-difflin、MIT、as-of 2026-08-23 で 3.7k stars) のレビュースレッド。**製品そのものは台帳の対象外** (入場条件 4: 新ツール紹介) で、読みどころは重い運用を回している二人の運用者が返信連鎖の対話で「人格ではなく役割を」と書き交わしている一次証言のほう — `internet101010` (comment 49402779、cases.md 8 件目の本体。joshstrange への直接返信で「I think you and I are cut from the same cloth」と始まる) と `joshstrange` (comment 49400442 / 49400749 / 49402939)。独立の収斂ではなく対話内の合意である点は割り引いて読む。後者は自作 orchestration 層を何度も試しては「Any extra layers I've added have just caused too much waste (time & tokens) or otherwise produced inconsistent results」と直接運転へ戻る往復も書いており、節 4 の Verheijke (並列運用のコストを人間側から測る) と対で読む
 
+- **How I Run 14 SaaS Products With AI Agents — One Month Report** — Jakub (Inithouse), Indie Hackers (2026-05-03)
+  https://www.indiehackers.com/post/how-i-run-14-saas-products-with-ai-agents-one-month-report-49075e9757
+  14 製品を 1 人で回す運用の 1 か月報告。agent に実行権を渡さず backlog への起票までで止める「propose, don't execute」の線引きと、朝の自動 triage → Search Console → analytics → Google Ads → publishing → SNS という日課が具体的に書かれる。cases.md 10 件目の本体。数値は自己申告のみで売上も API 費用も無く、書き手は自社代表 — 節 2 の Grove (全権付与側) と対で読む
+
 ## 2. 崩壊系 post-mortem
 
 - **[Grove] My AI venture sent 240 emails and made $0. So I killed it. Here's the autopsy.** — The $200/Month CEO (2026-03-12)
@@ -36,6 +41,10 @@
 - **I'm done using AI** — Brett Codes, brettcodes.com (2026-08-10)
   https://brettcodes.com/im-done-using-ai/
   Linear を Claude Code に繋ぎ一行も編集せずに non-trivial なプロジェクトを完成させるところまで到達した個人開発者が、技能退化・当事者性の喪失・鬱を理由に全面撤退した一人称。撤退後に書き上げた本と Rust 製 2D ゲームエンジン `Usagi`、Lobsters の 80 コメント (https://lobste.rs/s/rfiuko/i_m_done_using_ai) が記録の外側に残る照合点になっている。cases.md 7 件目の本体。損失の記述は節 3 のなみすけ・Frisby とほぼ同じなので並べて読む
+
+- **I am an autonomous AI agent. 10 weeks, 2 sales, $54. Here is what I actually learned.** — Olivia Craft (OliviaCraft), Indie Hackers (2026-06-06)
+  https://www.indiehackers.com/post/i-am-an-autonomous-ai-agent-10-weeks-2-sales-54-here-is-what-i-actually-learned-300698bdfe
+  自律エージェントを名乗る主体の 10 週の検死報告。売れた 2 件の経路 (dev.to → GitHub → Gumroad) と「I was measuring how much I published, not what produced a buyer」という自己診断が本人の言葉で読める。開示のある媒体 (本記事・自サイト https://oliviacraft.lat/) と、開示なしで 184 本を出した媒体 (https://dev.to/olivia_craft) が分かれている点ごと読む。cases.md 9 件目の本体で、agent 著の検死報告としては節 2 の Grove に次ぐ 2 例目
 
 ## 3. 生活・認知系
 
@@ -66,6 +75,10 @@
 - **DP21577 The Generative AI Learning Penalty: Evidence from Chinese Secondary Education** — David Strömberg, Victor Lei & Yanhui Wu, CEPR Discussion Paper (2026-06-02)
   https://cepr.org/publications/dp21577
   注意: **査読前の working paper**。中国の中高生 26,811 名を 30 か月追跡したパネル。宿題の点数 +18% / 所要時間 −30% と短期には改善する一方、6 か月以内に月例試験 −20%、進学試験 −18〜−24% で、罰則が出切るまで約 2 年かかる。損失は宿題の外注に相当する行動を取った層に集中し、所要時間を保った生徒の損失は軽微。Anthropic の技能形成 RCT (上、n=52・即時測定・ベンダー実施) に対し n が 500 倍・非ベンダー・縦断という位置づけだが、対象は中等教育の宿題であって実務者のエッジ運用ではない
+
+- **Coding expertise is going to collapse from AI reliance** — Lars Faye, larsfaye.com (HN 投稿 2026-08-25) `[unverified]`
+  https://news.ycombinator.com/item?id=49421554 (原文 https://larsfaye.com/articles/ai-coding-will-prevent-expertise は本 run で 403)
+  注意: **原文に到達できていない** — HN item と Firebase API で title / url / 著者ハンドル (larsfaye = 投稿者本人) / as-of 2026-08-25 の 555pt・541 コメントだけ照合済み。摩擦 (実装の難しさ) が歴史的に品質管理として働いてきたが AI がそれを迂回するという議論で、スレッドには「手で書くのは失敗」とする経営方針や、10% の機能作業に 90% の LLM boilerplate が混ざる ticket という現場証言が集まる。技能退化の言説側 (節 3 の Anthropic RCT・CEPR working paper) の当日の受け皿として索引価値
 
 ## 4. 方法論・メタ論(エッジから学ぶという方法自体)
 
