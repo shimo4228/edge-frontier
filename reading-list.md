@@ -5,6 +5,7 @@
 - 2026-08-20 初回 ingest: edge line レポート 2 本 (metrics-manufactured-edge / agent-wrote-the-autopsy) より。URL は run 内 WebFetch 解決済み
 - 2026-08-21 ingest: edge line レポート 1 本 (cognitive-surrender-selection-bias) より +7 本。URL は ingest run 内で再度 WebFetch 到達確認済み
 - 2026-08-22 ingest: edge line レポート 1 本 (first-person-needs-an-external-anchor) より +4 本。URL は ingest run 内で再度 WebFetch 到達確認済み
+- 2026-08-23 ingest: edge line レポート 1 本 (personas-vs-roles) より +1 本。HN コメントの permalink は本 run で 429 のため、スレッド URL への到達確認 + HN API での本文照合に替えた (コメント id を併記)
 
 ## 1. 突破系実践記
 
@@ -17,6 +18,9 @@
 - **How AI Became My Production Company** — Dominic Frisby, The Flying Frisby (2026-05-31)
   https://www.theflyingfrisby.com/p/how-ai-became-my-production-company
   記事画像とミュージックビデオを Midjourney / Runway / Neural Frames で制作し、文章は ChatGPT 主力・Grok を時事と市況の感情分析に、Claude は調査拒否で降格と用途を書き分ける個人の制作パイプライン。ただし編集の "Goat" と歴史調査の Sam は人間として残す (「まだ機能する脳が必要だ」)。同じ書き手の生活認知系 (節 3) と対で読む
+- **Munder Difflin – Agent harness to run an office of your clones** — Hacker News スレッド (2026-08-22 投稿、as-of 2026-08-23 で 242pt / 113 コメント)
+  https://news.ycombinator.com/item?id=49398152
+  個人製の multi-agent デスクトップ harness (https://github.com/chaitanyagiri/munder-difflin、MIT、as-of 2026-08-23 で 3.7k stars) のレビュースレッド。**製品そのものは台帳の対象外** (入場条件 4: 新ツール紹介) で、読みどころは重い運用を回している二人の運用者が返信連鎖の対話で「人格ではなく役割を」と書き交わしている一次証言のほう — `internet101010` (comment 49402779、cases.md 8 件目の本体。joshstrange への直接返信で「I think you and I are cut from the same cloth」と始まる) と `joshstrange` (comment 49400442 / 49400749 / 49402939)。独立の収斂ではなく対話内の合意である点は割り引いて読む。後者は自作 orchestration 層を何度も試しては「Any extra layers I've added have just caused too much waste (time & tokens) or otherwise produced inconsistent results」と直接運転へ戻る往復も書いており、節 4 の Verheijke (並列運用のコストを人間側から測る) と対で読む
 
 ## 2. 崩壊系 post-mortem
 
