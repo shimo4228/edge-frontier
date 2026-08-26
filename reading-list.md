@@ -8,6 +8,7 @@
 - 2026-08-23 ingest: edge line レポート 1 本 (personas-vs-roles) より +1 本。HN コメントの permalink は本 run で 429 のため、スレッド URL への到達確認 + HN API での本文照合に替えた (コメント id を併記)
 - 2026-08-24 ingest: edge line レポート 1 本 (permission-not-capability) より +2 本。当日分の後日補填回。ericpardee の blog / GitHub / Qiita は本 run で WebFetch 到達確認済み。HN item 49409073 のみ本 run で 429 のため Firebase API (title / url / score=696 / descendants=291 / by=dr_pardee) と Algolia API (AI 執筆疑義コメントと著者応答の本文照合) に替えた — レポートは「著者の応答は無い」としていたが、著者は 2026-08-24 03:35 UTC に応答し記事へ開示 addendum を追加していた (本 run で確認)
 - 2026-08-25 ingest: edge line レポート 1 本 (disclosure-splits-by-venue) より +3 本。URL は ingest run 内で再度 WebFetch 到達確認済み。larsfaye の原文のみ 403 のため HN item + Firebase API (title / url / score / descendants) での照合に替えた
+- 2026-08-26 ingest: edge line レポート 1 本 (public-token-leaderboards) より +4 本。URL は ingest run 内で再度 WebFetch 到達確認済み。2 点補正 — (1) レポートは tokscale.ai について「検証手順の記述はない」としていたが、GitHub README には "Level 1 validation" の中身が書かれている (提出値の内部整合のみで、提供者の請求との突き合わせは無い)。(2) 順位表の数値は同日内でも動く — 本 run 取得時点で tokscale は 1,994 名 → 2,003 名 / 9,096.487T → 9,096.956T、tokenflex.ing は 1.2T / $505.9K → 1.3T / $536.9K。首位シェア 99.22% と単価約 194 倍の開きは本 run の再取得値でも変わらない。tokenflex.ing の首位行 (レポートは @itsgptlucy 82.1B / $194.3K) のみ本 run では解決できず、台帳には参加者数と合計だけを載せた
 
 ## 1. 突破系実践記
 
@@ -109,3 +110,16 @@
 - **A reduction in self-reported confidence accompanies the recall of memories distorted by prototypes** — Casper Kerrén, Yiming Zhao & Benjamin J. Griffiths, Communications Psychology (2024-07-01)
   https://pmc.ncbi.nlm.nih.gov/articles/PMC11332036/
   6 実験 (物体と色 / 物体と位置の連合学習) で、記憶がプロトタイプ方向に歪んだとき自己報告の確信度が下がることを示し、確信の欠如が歪みを招くのではなく歪みが確信を下げる向きだと結論する。人間の回顧記録も歪むが**歪みの信号が文面に出る**側の証拠で、上の Honest Lying (confident but incorrect) と対で読む
+
+- **I used $30,983 of AI tokens last month in Claude code on $200/mo plan** — Khadin Akbar, Indie Hackers (2026-05-22)
+  https://www.indiehackers.com/post/i-used-30-983-of-ai-tokens-last-month-in-claude-code-on-200-mo-plan-3337a369a6
+  個人製の公開順位表 tokenflex.ing (https://tokenflex.ing/leaderboard、as-of 2026-08-26 で参加者 19 名 / 全期間 1.3T トークン・$536.9K) の発表投稿。動機として書かれるのは競争ではなく不可視性 —「nobody actually knows their actual token usage until they look」。数値は authenticated local usage sync 由来の API 換算自己申告で「these are not subscription bills」と免責されている。cases.md 13 件目の本体。強制のあった Meta / Amazon の順位表 (節 4 の tokenmaxxing 群、cases.md 2・3 件目) が畳まれたあとの opt-in 版として並べて読む
+- **Tokscale — AI Token Usage Tracker & Leaderboard** — junhoyeo, GitHub / tokscale.ai (README as-of 2026-08-26、5.2k stars、MIT)
+  https://github.com/junhoyeo/tokscale
+  ローカル transcript を直接読む CLI + 公開順位表 (https://tokscale.ai/leaderboard、本 run 到達時 2,003 名 / 9,096.956T トークン・$454.99M)。Kardashev スケール由来の命名と「In the age of AI-assisted development, tokens are the new energy」。README の "Level 1 validation" は「mathematical consistency (totals match, no negatives), no future dates, required fields present, duplicate detection」— **提出値の内部整合までで、提供者の請求とは突き合わせない**。首位が全体の 99.22% を占め単価が 2 位と約 194 倍ずれたまま公開されている状態は、検証が無いことではなく検証の層がここで止まることの帰結。cases.md 14 件目の本体で、一次に到達しても内部矛盾は残るという検算規律の実例
+- **'Tokenmaxxing' has techies debating if leaderboards tracking AI token use are a good idea** — Henry Chandonnet, Business Insider (2026-04-08)
+  https://www.aol.com/news/tokenmaxxing-techies-debating-leaderboards-tracking-185800252.html
+  注意: **二次流通 (AOL シンジケーション版。BI 原記事には本 run で未到達)**。Meta が順位表を畳む前日の当事者発言集で、擁護側は Garry Tan (Y Combinator)「We've been tokenmaxxing longer than most people」、批判側は Linear COO の Cristina Cordova「Ranking engineers by token spend is like me ranking my marketing team by who spent the most money...Don't mistake a high burn rate for a high success rate」。gaming の一般則は Gergely Orosz「Devs game everything and anything seen as a target for more bonus or promos. This was no different.」。ただし機構の具体 (loop でトークンを焼くだけの bot) を語る Khosla Ventures の Jon Chu は「Plenty of my Meta friends told me...」と**伝聞**で、裏付けとしては弱い。cases.md 2・3 件目 (製造された端の境界例) の言説側
+- **エンジニアの習熟度は、トークン消費量として露呈していく** — kaji, Zenn (2026-07-27)
+  https://zenn.dev/kaji_kaji/articles/token-management-as-ai-proficiency
+  同じ計測を批判せず**評価軸として引き受ける側**の日本語の一人称。出発点は自分の観測 (「自分がどれだけ雑にトークンを使っていたかに気づきました」) だが、記事本体は消費量が習熟度として露呈していくという予測で、上の Linear COO の批判とちょうど裏返しの向きになる。本 run で読んだ限り具体手順は書かれておらず (「この記事を書いた時点では具体的にやっていることを書けるほど固まっていなかった」)、続編 token-management-techniques へ送っているため cases.md には入れていない
