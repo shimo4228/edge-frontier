@@ -63,10 +63,17 @@ done
 [ "${#PENDING[@]}" -eq 0 ] && { log "all reports already ingested"; exit 0; }
 
 # === 前提: 台帳 2 ファイルが clean であること (前回の人間判断待ちを上書きしない) ===
+# 詰まりの明示化 (2026-08-27): 未 commit が残ると以後の run が毎朝ここで skip し続ける。
+# 1 発の toast では気づけないので、詰まりの規模 (未 ingest レポート数) と
+# 直近 fail の起点 (直近ログの ERROR 1 行) を通知に載せ、回復手順をログに出す。
 if ! git -C "$REPO_DIR" diff --quiet -- cases.md reading-list.md \
    || ! git -C "$REPO_DIR" diff --cached --quiet -- cases.md reading-list.md; then
-  log "ERROR: cases.md / reading-list.md に未 commit の変更がある — skip"
-  notify "台帳に未コミットの変更があるため今日の ingest を skip しました" "edge-ingest"
+  STUCK="${#PENDING[@]}"
+  LAST_FAIL=$(grep -h "ERROR:" "$LOG_DIR"/ingest-*.log 2>/dev/null | grep -v "未 commit" | tail -1)
+  log "ERROR: cases.md / reading-list.md に未 commit の変更がある — skip ($STUCK 本が未取り込みで滞留)"
+  [ -n "$LAST_FAIL" ] && log "  直近の fail 起点: $LAST_FAIL"
+  log "  回復: git diff -- cases.md reading-list.md を確認 → 修正/commit または git restore → 再実行"
+  notify "台帳の詰まりで ${STUCK} 本が滞留中。git status を確認して回復してください" "edge-ingest ⚠ 滞留"
   exit 1
 fi
 
@@ -82,6 +89,14 @@ cases.md / reading-list.md に取り込んでください。
 $REPORT_LIST"
 
 ALLOWED="Read,Glob,Grep,WebFetch,Edit(//${REPO_DIR#/}/cases.md),Edit(//${REPO_DIR#/}/reading-list.md)"
+# deny 層 (daily-research.sh と同型): --permission-mode default では allow は加算であって
+# 制限にならない (~/.claude の defaultMode=auto が --allowedTools を上書きし列挙外の Bash まで
+# 通す — daily-research の 2026-08-22 security review で PoC 実証)。無人実行の境界は deny で書く。
+# 2026-08-24 の実害: Bash+curl でモデルが repo 直下に .hn-tmp.json を作り OTHER ガードに触れ、
+# commit されず翌日以降の run を skip させ続けた。Write は列挙しない —
+# Edit(//abs/cases.md) は Write ツールの同 path 書き込みも許可する仕様で、全面 deny すると
+# 台帳追記自体を壊す。repo 直下への流出は Bash を断てば十分 (照合は WebFetch で足りる)。
+DISALLOWED="Bash,Task,NotebookEdit"
 
 STATUS_BEFORE=$(git -C "$REPO_DIR" status --porcelain)
 log "=== ingest $DATE: ${#PENDING[@]} report(s), model=$MODEL ==="
@@ -90,6 +105,7 @@ RESULT_JSON=$(cd "$REPO_DIR" && timeout 1200 "$CLAUDE_CMD" -p "$PROMPT" \
   --permission-mode default \
   --append-system-prompt-file "$SCRIPT_DIR/ingest-protocol.md" \
   --allowedTools "$ALLOWED" \
+  --disallowedTools "$DISALLOWED" \
   --max-turns 40 \
   --model "$MODEL" \
   --output-format json \
@@ -155,6 +171,7 @@ FC_JSON=$(cd "$REPO_DIR" && timeout 900 "$CLAUDE_CMD" -p "$FC_PROMPT" \
   --permission-mode default \
   --append-system-prompt-file "$SCRIPT_DIR/factcheck-protocol.md" \
   --allowedTools "Read,Grep,WebSearch,WebFetch,Agent(fact-checker)" \
+  --disallowedTools "$DISALLOWED" \
   --max-turns 30 \
   --model sonnet \
   --output-format json \
