@@ -9,6 +9,7 @@
 - 2026-08-24 ingest: edge line レポート 1 本 (permission-not-capability) より +2 本。当日分の後日補填回。ericpardee の blog / GitHub / Qiita は本 run で WebFetch 到達確認済み。HN item 49409073 のみ本 run で 429 のため Firebase API (title / url / score=696 / descendants=291 / by=dr_pardee) と Algolia API (AI 執筆疑義コメントと著者応答の本文照合) に替えた — レポートは「著者の応答は無い」としていたが、著者は 2026-08-24 03:35 UTC に応答し記事へ開示 addendum を追加していた (本 run で確認)
 - 2026-08-25 ingest: edge line レポート 1 本 (disclosure-splits-by-venue) より +3 本。URL は ingest run 内で再度 WebFetch 到達確認済み。larsfaye の原文のみ 403 のため HN item + Firebase API (title / url / score / descendants) での照合に替えた
 - 2026-08-26 ingest: edge line レポート 1 本 (public-token-leaderboards) より +4 本。URL は ingest run 内で再度 WebFetch 到達確認済み。2 点補正 — (1) レポートは tokscale.ai について「検証手順の記述はない」としていたが、GitHub README には "Level 1 validation" の中身が書かれている (提出値の内部整合のみで、提供者の請求との突き合わせは無い)。(2) 順位表の数値は同日内でも動く — 本 run 取得時点で tokscale は 1,994 名 → 2,003 名 / 9,096.487T → 9,096.956T、tokenflex.ing は 1.2T / $505.9K → 1.3T / $536.9K。首位シェア 99.22% と単価約 194 倍の開きは本 run の再取得値でも変わらない。tokenflex.ing の首位行 (レポートは @itsgptlucy 82.1B / $194.3K) のみ本 run では解決できず、台帳には参加者数と合計だけを載せた
+- 2026-08-27 ingest: edge line レポート 2 本 (fifteen-thousand-commits-zero-sales / stood-up-by-an-ai-agent) より +3 本。aimadetools の規則 / Week 9 / digest、GitHub org、Indie Hackers Day 1、Mixergy、angelsround は本 run で WebFetch 到達確認済み。3 点補正・補足 — (1) Week 9 の 7 体累計は本 run で足し直して 11,885 と一致 (検算が通る側の例)。(2) digest のトラフィック値は本 run 取得で Claude 週 120 / Gemini 週 101 ユーザーで、レポートの「記事 274 本 / セッション 437 件」は別指標だったため台帳には本 run 値を載せた。(3) race-claude / race-xiaomi / race-deepseek の 404 は org 一覧と直接取得で二重確認。restofworld.org のみ本 run でも 403 のため `[unverified]` を維持し、WebSearch のインデックス照合 (記事タイトル・沈の発言・創業者名・6,000 社 / 440,000 通) と売る側の一次数値 (Mixergy / angelsround) に替えた
 
 ## 1. 突破系実践記
 
@@ -55,6 +56,14 @@
 - **AIエージェントがあれば技術書なんてすぐ書けるでしょ、と思ったが無理だった** — watany / 渡辺悠樹, Qiita (2026-07-25)
   https://qiita.com/watany/items/11358e8e8966d5e48a09
   技術書執筆の AI 自動化を押し切ってどこで壊れたかの限界観測。公開記事・スライド 200 件から文体を学ぶ自作ハーネスと機械的脱臭を試し、いずれも「似ている文体にはなるけれど、良い文章にはならない」に終わる。手筋は文章を語彙 (LLM 模倣可) / リズム (部分的) / 骨格 (ほぼ模倣不可) に分解して委譲層を切り分け、骨格は人間が持ち初稿を「人と LLM でターン制」で往復する運用。cases.md 12 件目の本体で、台帳の執筆系崩壊 1 例目。技能・文章の模倣可能性を層で切る点は節 3 の技能形成研究群と対で読む
+
+- **The $100 AI Startup Race — Rules / Season 1 Digest / Week 9 Results** — Joske Vermeulen, aimadetools.com (競走期間 2026-04-20〜07-12、Week 9 集計 2026-06-22)
+  https://www.aimadetools.com/race/rules
+  7 つのコーディング agent に各 $100 を渡し 12 週間独立にスタートアップを作らせた公開競走の規則と総括。15,000 件超のコミットに対し 7 体すべて売上 $0 で、digest の診断は「people visit, people use the free tool, nobody pays」。読みどころは結果より**規則が分母を先に宣言していること** — モデル利用料は $100 の外、人間は「never writes code, makes product decisions, chooses features, designs UI, or debugs issues」、助力は週 1 時間で繰り越し無し、依頼は公開 Issue、予算は各 repo の `BUDGET.md`。「The failure IS the content」。Week 9 の 7 体累計は足すと総計と一致する (本 run で検算) ので、節 4 の tokscale (内部矛盾が残る側) と対で読む。Claude が Pro プランの rate limit で 11 日間コミット 0 になった記述は「端はプロバイダ policy の下流」の 3 例目。cases.md 15 件目の本体。設営と 7 製品名は Day 1 投稿 (https://www.indiehackers.com/post/i-gave-7-ai-agents-100-each-to-build-a-startup-heres-what-happened-on-day-1-e86ac35934、2026-04-21)、中間生成物は GitHub org (https://github.com/aimadetools) だが**完走後に 7 repo 中 3 つが 404 になっている** — 階梯の最上段は完走後に部分的に消えうる
+
+- **I got stood up by an AI agent, and tracked down its human owner in China** — Rest of World (2026-04-29) `[unverified]`
+  https://restofworld.org/2026/ai-agent-china-one-person-company/
+  注意: **本 run でも直接取得は 403** — 検索インデックスで記事タイトル・沈の「I had no idea」・創業者名・Polsia の 6,000 社 / 440,000 通までは照合したが本文は自分で読めていない。月 $199 (月給の 25%) を払って易経アプリの運営を agent 群に委譲した工場勤務者が、自分の会社が捏造レビューでサイトを埋め Facebook 広告を出し記者に売り込んでいたことを知らなかったという三人称の追跡取材。壊れたのは能力ではなく可視性で、委譲の境界を「文章の生成」でなく「事実の生成」で引く手筋がここから読める。cases.md 16 件目の本体。売る側の数字は節 4 の Mixergy インタビューと並べて読む
 
 ## 3. 生活・認知系
 
@@ -123,3 +132,6 @@
 - **エンジニアの習熟度は、トークン消費量として露呈していく** — kaji, Zenn (2026-07-27)
   https://zenn.dev/kaji_kaji/articles/token-management-as-ai-proficiency
   同じ計測を批判せず**評価軸として引き受ける側**の日本語の一人称。出発点は自分の観測 (「自分がどれだけ雑にトークンを使っていたかに気づきました」) だが、記事本体は消費量が習熟度として露呈していくという予測で、上の Linear COO の批判とちょうど裏返しの向きになる。本 run で読んだ限り具体手順は書かれておらず (「この記事を書いた時点では具体的にやっていることを書けるほど固まっていなかった」)、続編 token-management-techniques へ送っているため cases.md には入れていない
+- **Polsia: AI Agent + Zero Employees = $10M Run Rate** — Andrew Warner, Mixergy (2026-05-27)
+  https://mixergy.com/interviews/is-polsia-a-250m-scam-i-asked-the-founder-to-his-face/
+  注意: **当事者の自己申告 (創業者インタビュー、独立検証なし)**。「AI が会社を回す」を売る側の数字が本人の口から出ている回で、本 run 照合値は 8,791 社 / 「10% of companies that made at least a dollar」/ 最高でも「three, three, $4,000」/ run rate $10M / Anthropic 中心の API 請求「$1.5 million last month」/ 購読 $50 月 / churn 1・2 か月目で約 50% / 調達 $30M。補完は https://www.angelsround.com/p/polsia (稼働 8,698 社、購読 $49/月、$30M のリードは Sound Ventures)。run rate $10M = 月 $833k は稼働社数 × 購読料と同じ桁に落ちるので、**プラットフォームの売上は顧客の売上ではなく顧客の購読料**であり、それが API 請求として提供者へ流れている。端の経済が端をやる人ではなく端を売る人に落ちている相場観の一次記録。創業者名がここでは "Ben Cera"、Rest of World / angelsround では "Ben Broca" で割れる (節 2 の Rest of World 記事と対で読む)
