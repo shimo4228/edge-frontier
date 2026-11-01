@@ -27,6 +27,7 @@
 - 2026-10-30 ingest: edge line レポート 1 本 (agent-written-tests-escape-worktree) より +6 本。issue #105342 / #103413 / #105298 / #102741 と Claude Code Docs の sub-agents / sandboxing は本 run で WebFetch 到達確認済み。`data-loss` ラベルの一覧は件数が動くため載せない (2026-09-03 と同じ扱い)。3 点の補正・補足 — (1) レポートは #105342 について「削除が止まったのは約 6 分後で、止めたのは人間だった」と書くが、本文は「stopped about 6 minutes in」とだけ書き rm を止めた主体を書かない。人間を待ったのは並行セッションの `kill -9` のほう。(2) レポートの #103413「3 つの規則」は、原文では 1 文の中の列挙と別立ての PreToolUse hook。(3) レポート作成後の 10-30 に #105342 へコメント 2 件 (its-tahir、Orend11 の 2 件目) が付いている。いずれも Anthropic 側ではない
 - 2026-09-23 ingest: edge line レポート 1 本 (JRP 版 `2026-09-23_jrp_edge.md`、後日補填回) より +7 本。論文 7 本はいずれも本 run で arXiv abs または HF papers に WebFetch 到達確認済み (2602.20021 / 2604.26091 / 2607.13083 / 2607.13070 / 2607.14340 / 2609.26087 は arXiv abs、2607.17044 は HF papers のみ)。Agents of Chaos は事例サイト agentsofchaos.baulab.info にも到達。1 点の補足 — レポートは Agents of Chaos の「完了報告と実状態の矛盾」を要旨の文として引いており、abs で逐語照合できたが、事例サイトの 16 件の一覧からは該当する個別事例を特定できなかった
 - 2026-09-25 ingest: edge line レポート 1 本 (JRP 版 `2026-09-25_jrp_edge.md`) より +2 本。arXiv 2609.26826 abs、arXiv 2605.06607 abs と HTML 本文、HF papers、GitHub は本 run で WebFetch 到達確認済み。Phantom Guardrails (2607.13083) は 2026-09-23 に既出のため追加せず、Review 節の `mohitagw15856/agent-postmortems` (2023-12〜2025-08 の既知の事例 8 件、各件 `verified: false`) も追加せず。1 点の補足 — HF papers が載せる GitHub `csml-rpi/cfd-scientist` は本 run で `csml-rpi/AI-CFD-Scientist` として表示された
+- 2026-09-27 ingest: edge line レポート 1 本 (JRP 版 `2026-09-27_jrp_edge.md`) より +2 本。arXiv 2608.05179 abs と HF papers、arXiv 2606.18874 abs (v1 と現行 v4)・HTML 本文・HF papers・GitHub `OpenDFM/Xcientist` は本 run で WebFetch 到達確認済み。Phantom Guardrails (2607.13083) は既出のため追加せず、Review 節の `mohitagw15856/agent-postmortems` も追加せず。2 点の補足 — (1) 2606.18874 はレポートの題 (v1・HF 表示) から v4 (2026-09-27) で「Making AI Scientists Auditable from Evidence to Claim」へ改題され、claim drift の定義も「走る成果物が当初の仕組みを支えない」から「受理した主張と、帰属させた出典・コード・実験との未解決の不一致」へ広がり、監査の数値が足された。(2) 2608.05179 は arXiv ID が 2608 だが、abs・HF とも提出日を 2026-06-29 と表示する
 
 ## 1. 突破系実践記
 
@@ -72,6 +73,9 @@
 - **AI CFD Scientist: Toward Open-Ended Computational Fluid Dynamics Discovery with Physics-Aware AI Agents** — Nithin Somasekharan ほか 6 名 (Rensselaer Polytechnic Institute), arXiv:2605.06607 (2026-05-07 v1 / 05-12 v3)
   https://arxiv.org/abs/2605.06607
   GPT-5.5 の agent に OpenFOAM で着想から執筆まで回させ、結果を受理する前に描画した流れ場を VLM に見せて物理的に妥当かを判定させる門を置いた記録。周期丘で Spalart-Allmaras の補正を見つけ Cf の誤差を DNS 比 7.89% 下げた。読みどころは門の測り方で、合格済みのケースに壊れを 16 個仕込むと solver 段が見逃した 14 個を捕まえ、外した 2 個は「見た目は完成している」打ち切りの収束不足だった。code と prompt は https://github.com/csml-rpi/AI-CFD-Scientist (MIT)。著者自身が backbone 1 系統・手作業の比較・「supervised scientific assistance, not unattended publication」と限定する。cases.md 47 件目の本体で、節 1 の Philipp (形式証明の検証器) と並べ、検証器が形式でない領域での門の置き方として読む
+- **Making AI Scientists Auditable from Evidence to Claim (v1 題: Externalizing Research Synthesis and Validation in AI Scientists through a Research Harness)** — Zijian Wang, Hanqi Li ほか (Shanghai Jiao Tong University ほか), arXiv:2606.18874 (2026-06-17 v1 / 09-27 v4)
+  https://arxiv.org/abs/2606.18874
+  AI scientist の工程を evidence graph (抽出欄ごとに原文の逐語引用) と段ごとの validation contract に外出しし、「A textual progress summary alone cannot satisfy a completion condition」とする research harness Xcientist。走る成果物が主張した仕組みを支えなくなる「claim drift」を名付け、v4 で他の 3 システムと監査率を比べる — 差の大半は「fewer unverifiable claims」から来ると著者自身が書く。code は https://github.com/OpenDFM/Xcientist (MIT)。cases.md 48 件目の本体で、節 1 の AI CFD Scientist (成果物を描画して別の呼び出しに見せる門) と並べ、合否の門でなく主張と根拠の辺を残す側として読む
 
 ## 2. 崩壊系 post-mortem
 
@@ -363,3 +367,6 @@
 - **What Makes a Terminal-Bench Task Hard? Separating Genuine Hardness from Fake-Hardness on an Adjudicated Agentic Corpus** — Edward Lue Chee Lip ほか 6 名, arXiv:2609.26826 (2026-09-20)
   https://arxiv.org/abs/2609.26826
   Terminal-Bench 3 / Frontier-Bench 0.1 の記録 (採点済み 639 タスク・28,801 試行) で、どのモデルも通らなかった 125 タスクのうち妥当性の審査を残るのは 78 だけとする分析。残りは oracle の破損 14・インフラ障害が支配 8・検証器の迂回でしか通らない 4・解けることの証拠不足 21 で、「a task that no model solves is not automatically a hard task」。certified-unsolved の札も「作者の解法経路が通り、インフラが支配せず、厳密な迂回が観測されず、評価した agent が全員落ちた」という狭い意味だと著者が書く。ベンチマークそのものは台帳の対象外だが、「誰も解けなかった」「解けた」を成果として読む前に検証器と oracle の側を疑う分母の問いとして、上の VibeMathed・Cyphral Distich の HN と並べて読む
+- **Autonomous Research Agents: A Survey of AI Scientists and the Verification Gap** — Tianyu Ding, Aditya Nannapaneni, Bingfan Liu, Ling Zhang, arXiv:2608.05179 (提出日表示 2026-06-29)
+  https://arxiv.org/abs/2608.05179
+  AI scientist の文献 125 件を 35 件に絞り 26 件 (走るシステム 24・研究 / 立場表明 2) を全文で符号化したサーベイ。走る 24 件でコード公開は 83% だが、seed か実行記録の公開と新規性の確認法の記述はそれぞれ 38%。閉ループ L4 の 9 件のうち 7 件は機械的な再実行で、1 件は外部確認の無い著者の主張にとどまり、符号化規則の上では外部検証された運用中の判定機構を示す LLM 時代のシステムは無い。律速は生成でなく主張を検証できるかだという整理で、節 1 の Xcientist (主張と根拠の辺を残す) と、上の VibeMathed・Terminal-Bench 分析 (検証器を通った分母) と並べて読む
