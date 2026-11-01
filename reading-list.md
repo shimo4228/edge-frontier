@@ -22,6 +22,7 @@
 - 2026-09-06 ingest: edge line レポート 1 本 (false-success) より +2 本。issue #89014 と arXiv 2606.09863 abs は本 run で WebFetch 到達確認済み。Nate's Newsletter は本文が課金層のため追加せず、`data-loss` × `area:permissions` の交差一覧は件数が動くため載せない (2026-09-03 と同じ扱い)。3 点の補足 — (1) #89014 には レポート作成後の 2026-10-01 に第三者コメント (fujiezee) が付き、デプロイ成功を CI 自身の結論 (`gh run view <id> --json conclusion`) でだけ言わせる案を出している。(2) 依頼の原文は「add action links to one notification email」(レポートは「アクションリンクを足すこと」)。(3) AppWorld の 75.8% は要旨では explicit status claims を伴う self-assessing coding-agent trajectory に限った値で、要旨は dual-control の telecom タスクでは false success 3% とも書く (レポートは未記載)
 - 2026-09-15 ingest: edge line レポート 1 本 (fable-cipher-solved-and-refuted) より +3 本。vals.ai / Reticuli の FINDINGS.md とフォルダ一覧 / HN / Lobsters / The Decoder / Wikipedia は本 run で WebFetch 到達確認済み (pasqualepillitteri.it の反証まとめは追加せず)。3 点の補正 — (1) レポートは Wikipedia の Logopandecteision 項が Vals の発表を [better source needed] 付きで載せていたと書くが、本 run 取得時点の項には該当する記述が無い (版履歴は未照合)。(2) Lobsters の「誰も知らなかった」は暗号学の専門家一般ではなく投稿者の暗号に詳しい知人の話。(3) HN は本 run 取得時点で 1,218pt / 570 コメント (レポートは 1,126 / 519)
 - 2026-09-17 ingest: edge line レポート 1 本 (rule-written-minutes-before-broken) より +6 本。issue #94548 / #94557 / #94453 / #80579 / #61908 / #80873 は本 run で WebFetch 到達確認済み。`data-loss` ラベルの一覧は件数が動くため載せない (2026-09-03 と同じ扱い)。4 点の補正・補足 — (1) #94453 の題は「in auto mode」だが本文の環境欄は「Accept Edits was ON (auto-accepting changes)」で、Claude Code の版の欄は「v」で空。(2) レポート作成後にコメントが付いている — #94548 に 10-23 (samvallad33)、#94453 に 09-18 (iamjohn96、Bash 経由の変更は checkpoint に載らないという指摘)・10-23 (samvallad33)・10-25 (brandononchain、permissions の deny / ask 例)。いずれも Anthropic 側ではない。(3) 先行 3 件の状態: #80579 は 09-04 に bot が inactive で closed as not planned・10-31 lock、#80873 は 09-06 に bot が closed as not planned、#61908 は 06-24 に bot が closed as not planned・08-26 lock。(4) guruchill の 2 件はモデル欄が「None」でモデル未記載
+- 2026-09-19 ingest: edge line レポート 1 本 (abramov-vibed-conway-proof) より +2 本。overreacted.io / GitHub `gaearon/conway-refinement` / HN スレッド / VibeMathed (項目と統計) は本 run で WebFetch 到達確認済み。3 点の補正 — (1) HN は本 run 取得時点で 271pt / 297 コメント (レポートは 158 / 153)。(2) VibeMathed の統計は本 run 取得時点で 1,284 問・Lean-verified 12% (レポートは 721 問・21%)。(3) Palomar は repo では build コマンドとファイル名に現れるだけで、機械検査の通過は本 run でも未照合
 
 ## 1. 突破系実践記
 
@@ -53,6 +54,10 @@
 - **Claude Fable 5.1 Solves the Cyphral Distich** — Geby Jaff, Vals AI (2026-08-31)
   https://www.vals.ai/blogs/fable-solves-cyphral-distich
   注意: **ベンダー資料 (AI 評価会社の自社ブログ。結果の宣伝に動機を持ちうる) で、翌日に反証が出ている (節 4 の Reticuli)**。問題を指定せず「未解決の暗号を解け」と過去の成果を読ませる励ましを添えて渡し、44 分・176k トークン・介入ゼロで 1653 年の暗号の解を得たとする open task 運用の記録。解の内部整合 (各行 32 文字・押韻・史実) を「extremely self-verifying」と書くが、同ページの別の暗号では EEBO-TCP 転写に頼った 9 文字の未解決を「needs a physical copy」と自分で留保している。cases.md 34 件目の本体
+
+- **How I Vibed a Proof of Conway's Conjecture** — Dan Abramov, overreacted (2026-09-18)
+  https://overreacted.io/how-i-vibed-a-proof-of-conways-conjecture/
+  数学の素人が約 1 か月・約 400 億トークン (API 換算は ChatGPT の見積もりで約 $40,000) で、Conway の 1976 年の refinement 予想を Lean の証明まで運んだ一人称。読みどころは失敗した 3 週間と立て直しの差で、役割 agent 群 (PM / Math / Red / Random / Lean) が積んだ約 30 本の文書を捨て、査読済みの層と別 worktree の実験層に分け、造語を A, B, C に剥がして別文脈で標準名に付け直させた。信頼は Mathlib だけを import する主張ファイルと公理 3 つ (他は linter で禁止) に縮めてある — repo https://github.com/gaearon/conway-refinement。本人は数学者の独立検証がまだ無いことと、主張の定式化が予想とずれている可能性を自分で書く。HN (https://news.ycombinator.com/item?id=49755024) の「There are two ifs in this sentence.」(omnicognate) が残る疑いの置き場所を 1 行で言っている。cases.md 37 件目の本体。節 1 の Vals AI (内部整合で自己検証を打ち切った側) と対で読む
 
 ## 2. 崩壊系 post-mortem
 
@@ -294,3 +299,7 @@
 - **Instruction adherence decays mid-session — CLAUDE.md rules "fade" after 5–10 turns (#80873)** — sakal-s, anthropics/claude-code issue (2026-07-24、09-06 に bot が closed as not planned)
   https://github.com/anthropics/claude-code/issues/80873
   規則は文脈に残ったまま「start slipping around turn 5–10, and are effectively gone by turn 20」というセッション長の仮説。数値は逸話で計測は無い。コメントでは marcindulak が、セッション内の減衰か新規セッションでも起きるかを `DISABLE_PROMPT_CACHING=1` の新規コンテナで繰り返して切り分ける方法を挙げる。cases.md 35 件目 (数分後の違反) をセッション長で説明できるかを問うときの対立仮説
+
+- **VibeMathed — AI 関与の数学解決の追跡サイト (項目: Conway's Refinement Conjecture for Omnific Integers / Stats)** — vibemathed.com (as-of 本 run)
+  https://vibemathed.com/problem/conway-s-refinement-conjecture-for-omnific-integers
+  「AI が未解決問題を解いた」型の発表を、解決日・サイト側の Lean 再構築日・状態 (Conway の件は「Candidate (review pending)」、09-03 解決 / 09-04 に commit 264445c9 で再構築) で記録する索引。統計ページ (https://vibemathed.com/stats) は本 run 取得時点で追跡 1,284 問・Lean-verified 12% (レポート時点は 721 問・21%) で、分母が増えるほど機械検証つきの比率が下がっている。節 4 の HN スレッド (Cyphral Distich、選別と分母の問い) と並べて、主張の山のうち外部の検証器を通ったものがどれだけかを測る定点として読む
