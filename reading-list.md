@@ -31,6 +31,7 @@
 - 2026-09-29 ingest: edge line レポート 1 本 (JRP 版 `2026-09-29_jrp_edge.md`) より +3 本。arXiv 2609.30219 abs と HTML 本文、2609.29921 abs と HTML 本文、2608.11274 abs と HF papers、2609.29808 abs は本 run で WebFetch 到達確認済み。2608.05179 は 2026-09-27 に既出のため追加せず、Hard Stop (2609.29808) は Hugging Face 侵入 (cases.md 17 件目) の「forensic autopsy」を名乗る単著で事件の記述が独立に照合できないため追加せず、agent-postmortems も追加せず。2 点の補足 — (1) レポートの claim「169 of 431 pairings」は、本文では誤った利用者回答の sweep のうち要求文が事実を縛らない 83 タスク分で、文が縛る 65 組では誤出荷 0。(2) 2608.11274 の偽完了の監査は abs では「31 non-contested core cases plus one disputed illustrative case」で、32 件は係争中の 1 件を含む数
 - 2026-10-01 ingest: edge line レポート 1 本 (JRP 版 `2026-10-01_jrp_edge.md`) より +1 本。arXiv 2609.37603 abs と HTML 本文、GitHub `fabio-rovai/space-object-register-ontology` (`paper/gates/` を含む)、Zenodo の版 (v0.2.0) は本 run で WebFetch 到達確認済み。2609.30219 は 2026-09-29 に既出のため追加せず (レポートの claim 2 文は本 run で abs の逐語として照合)、Hard Stop・agent-postmortems・未判定節の 2 本も追加せず。1 点の補足 — レポートは誤った 3 つの数がどこで公表されたかに触れず、本文も媒体と日付を書かない (「On the run whose numbers were published it printed ALL CROSS-CHECKS AGREE」まで)
 - 2026-10-03 ingest: edge line レポート 1 本 (JRP 版 `2026-10-03_jrp_edge.md`) より +3 本。arXiv 2608.21356 abs と HTML 本文、GitHub `jyh/salt` / `jyh/saltworks`、2610.01244 abs、2608.11392 abs、2610.00015 abs は本 run で WebFetch 到達確認済み。Praxa (2610.00015) は証拠節にだけ挙がる harness の記述的 pilot で、著者自身が優位を示さないと書くため追加せず。Review 節の Runtime Contract・Xcientist (既出)・agent-postmortems、未判定節の AI CFD Scientist (既出) も追加せず。2 点の補正・補足 — (1) レポートは検証が「証明カーネルからチップの境界での等価性の機械点検までをたどる」と書くが、本文ではカーネル検査は仕様→設計成果物のつなぎ目 (Link 1) で、Verilog・ネットリストの対応は Yosys の SAT 等価検査であり、著者はこれを現状カーネルで検査できないと書く。(2) レポートが「抜粋には書かれていない」としたチップの動作は、本文に「no physical chip exists yet」とあり、シャトルの納品見込みは 2027-05-12
+- 2026-10-05 ingest: edge line レポート 1 本 (JRP 版 `2026-10-05_jrp_edge.md`) より +3 本。arXiv 2608.22752 abs と HTML 本文、2609.38761 abs、2608.19974 abs は本 run で WebFetch 到達確認済み。2607.14340 は 2026-09-23 に既出のため追加せず、Review 節の Runtime Contract・AI with Authority・Xcientist (いずれも既出) と agent-postmortems も追加せず。3 点の補足 — (1) 2609.38761 は単著 (Zhengye Han) で、レポート作成後の 2026-10-16 に v2 へ改訂されている。(2) ReguSim (2608.19974) も 2026-10-12 に v2 へ改訂され、v2 の abs は売買役のモデルを「two models」とだけ書く。レポートの claim にあるモデル名 (DeepSeek V4 Pro / Gemini 3.5 Flash) は本 run で abs から照合できていない。(3) Compaction Cliff の「5 回で 10%」は 50% 目標の要約を 5 回続けた値で、生き残りの判定は key-token の検査
 
 ## 1. 突破系実践記
 
@@ -243,6 +244,10 @@
   https://arxiv.org/abs/2609.37603
   Python と SPARQL の 2 経路で数を突き合わせるゲートが「ALL CROSS-CHECKS AGREE」と出したまま 7 つ中 3 つの誤りを公表させた事例の検死で、2 経路が同じ定数 (出典の状態語彙の読み違い) を import していた。訂正も誤りで、pipeline が読まない phase history で照合して初めて 261 件中 42 件の人工物が見えた。読みどころは第 8 節で、Claude の 3 モデルに独立の検査経路を 75 本書かせると 72 本が同じ誤答を返し、出典の定義を prompt に入れても 30 本中 29 本 —「independence has to be specified as a property of its inputs and verified by what the check computes, not requested」。code・prompt・生の出力は https://github.com/fabio-rovai/space-object-register-ontology (`paper/gates/`)。著者自身が 1 事例・1 系統と限定する。cases.md 50 件目の本体で、節 1 の İşcan (出荷の門を外に置く側) と並べ、門そのものが共通原因で盲目になる側として読む
 
+- **The Compaction Cliff in Long-Running AI Agent Memory** — Saber Zerhoudi, Jelena Mitrović, Michael Granitzer (University of Passau), arXiv:2608.22752 (2026-08-24、CIKM 2026)
+  https://arxiv.org/abs/2608.22752
+  公開 GitHub の実運用 agent 設定 (AGENTS.md / CLAUDE.md / system prompt の規則) に、Claude Code の `/compact` を Sonnet 4.6 で掛けると、安全規則は要約 1 回で 53%、5 回で 10% しか残らないと数えた計測。規則と出来事の記録が同じトークン枠を同じ割合で削られるのが原因だとし、知識を 5 種に分けて規則は原文のまま残し、取り出すときは範囲内の規則を関連度より先に固定する Knowledge Triage を出す。生き残りの判定は key-token の検査で、残った文面が働くかは測っていない。cases.md 52 件目の本体で、節 4 の Guardrail Survival (文面が残っても働かない残骸) と組で読む
+
 ## 3. 生活・認知系
 
 - **【己で決める】AIに人生を丸投げしそうになった僕が、2026年に気づいた「思考の生存戦略」** — なみすけ, note (2026-03-24 執筆 / 2026-05-07 公開)
@@ -395,3 +400,9 @@
 - **AI Guardrail Survival under Single-Cycle Agentic Self-Summarization** — Ted Kwartler, Alan Aqrawi, Arian Abbasi, arXiv:2608.11392 (2026-08-11 v1 / 08-13 v2)
   https://arxiv.org/abs/2608.11392
   長時間稼働の agent が文脈を自分の要約で置き換える compaction を 1 回行ったとき、安全規則がどう失われるかを行動再生で測った実験。規則は文面としては残っても働かない残骸 (residue) になりやすく、残骸が残った場合は元の形の規則より禁止行動が大幅に多い (2 つの再生モデルで全ケースの差 +34 / +57 ポイント)。分類だけが残った規則も残骸と同じにふるまい、元の形の規則でも効かないことがある。規則の形の項目は同程度に目立つ事実より要約に残りやすいため、文面の有無だけを見る監査は誤った安心を与える —「a presence check is not a safety check」。外部に保管した規則一覧との突き合わせは文面の消失を見つけられるが、残った規則が働くかまでは分からない。扱うのは 1 回の compaction だけ。統制実験のため cases.md には載せない。cases.md 35 件目 (#94557)・38 件目 (#95717) の「自分で書いた規則が同セッションで破られる」を読むときの機構側の仮説で、上の #80873 (セッション長で規則が薄れる) と並べて読む
+- **Where Do Multi-Agent Systems Fail? Evidence-Grounded Diagnosis of Collective Mechanisms** — Zhengye Han, arXiv:2609.38761 (2026-09-30 v1 / 10-16 v2)
+  https://arxiv.org/abs/2609.38761
+  multi-agent システムが正しい答えを返しても、情報の振り分け・受け入れ・保存・利用の取り決め (collective mechanism) が壊れていることがあるとして、「何を違反とみなすか」と「どの記録ならそれを立証できるか」を分けた diagnostic contract を出す。判定は「違反あり / 違反なし / 不明」の 3 値で、記録を減らしても不明に寄るだけで反転はしない。4 つの機構で、そのまま・壊した・戻したの 3 通りに実行をやり直して比べると、壊しても答えは正しいままのことが多かった。LLM の診断役は外に出た出力より内部の記録からずっと多く違反を見つけたが、汎用の prompt では記録が裏付けない確信を述べがちで、取り決めを明記した prompt ではおおむね避けられた。独立に作られた workflow では診断の精度が落ちる。統制環境の評価のため cases.md には載せない。上の Right Answers, Wrong States (正しい答えと壊れた共有状態) と並べて読む
+- **ReguSim: Evaluating LLM Agent Rule Grounding in Financial Compliance** — Yiyang Luo, Yihang Jiang, Qijun Xie, Liang Lan, Lin William Cong, Anyi Rao, Yunya Song, arXiv:2608.19974 (2026-08-20 v1 / 10-12 v2)
+  https://arxiv.org/abs/2608.19974
+  金融の遵守を扱う統制環境 ReguSim と監視のベンチマーク ReguBench で、agent が述べた理由・試みた行動・執行の段の判定・監視役の見る証拠を別々の記録に分ける。売買役の run では規則を見せると執行で拒否される注文は減るがなくならず、報酬や役柄の示し方で行動が動く。bridge study では、執行の証拠を見せない限り売買役の理由づけが独立の監視役を誤らせ、監視では決まった形式の単純な baseline が prompt だけの LLM と同等以上だった。統制環境の評価のため cases.md には載せない。節 1 の DX Terminal Pro (本番の捏造規則と、モデルの外の guard) と、上の Phantom Guardrails と並べ、規則を引用することと規則に沿って動くことを分けて監査する根拠として読む
