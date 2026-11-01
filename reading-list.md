@@ -29,6 +29,7 @@
 - 2026-09-25 ingest: edge line レポート 1 本 (JRP 版 `2026-09-25_jrp_edge.md`) より +2 本。arXiv 2609.26826 abs、arXiv 2605.06607 abs と HTML 本文、HF papers、GitHub は本 run で WebFetch 到達確認済み。Phantom Guardrails (2607.13083) は 2026-09-23 に既出のため追加せず、Review 節の `mohitagw15856/agent-postmortems` (2023-12〜2025-08 の既知の事例 8 件、各件 `verified: false`) も追加せず。1 点の補足 — HF papers が載せる GitHub `csml-rpi/cfd-scientist` は本 run で `csml-rpi/AI-CFD-Scientist` として表示された
 - 2026-09-27 ingest: edge line レポート 1 本 (JRP 版 `2026-09-27_jrp_edge.md`) より +2 本。arXiv 2608.05179 abs と HF papers、arXiv 2606.18874 abs (v1 と現行 v4)・HTML 本文・HF papers・GitHub `OpenDFM/Xcientist` は本 run で WebFetch 到達確認済み。Phantom Guardrails (2607.13083) は既出のため追加せず、Review 節の `mohitagw15856/agent-postmortems` も追加せず。2 点の補足 — (1) 2606.18874 はレポートの題 (v1・HF 表示) から v4 (2026-09-27) で「Making AI Scientists Auditable from Evidence to Claim」へ改題され、claim drift の定義も「走る成果物が当初の仕組みを支えない」から「受理した主張と、帰属させた出典・コード・実験との未解決の不一致」へ広がり、監査の数値が足された。(2) 2608.05179 は arXiv ID が 2608 だが、abs・HF とも提出日を 2026-06-29 と表示する
 - 2026-09-29 ingest: edge line レポート 1 本 (JRP 版 `2026-09-29_jrp_edge.md`) より +3 本。arXiv 2609.30219 abs と HTML 本文、2609.29921 abs と HTML 本文、2608.11274 abs と HF papers、2609.29808 abs は本 run で WebFetch 到達確認済み。2608.05179 は 2026-09-27 に既出のため追加せず、Hard Stop (2609.29808) は Hugging Face 侵入 (cases.md 17 件目) の「forensic autopsy」を名乗る単著で事件の記述が独立に照合できないため追加せず、agent-postmortems も追加せず。2 点の補足 — (1) レポートの claim「169 of 431 pairings」は、本文では誤った利用者回答の sweep のうち要求文が事実を縛らない 83 タスク分で、文が縛る 65 組では誤出荷 0。(2) 2608.11274 の偽完了の監査は abs では「31 non-contested core cases plus one disputed illustrative case」で、32 件は係争中の 1 件を含む数
+- 2026-10-01 ingest: edge line レポート 1 本 (JRP 版 `2026-10-01_jrp_edge.md`) より +1 本。arXiv 2609.37603 abs と HTML 本文、GitHub `fabio-rovai/space-object-register-ontology` (`paper/gates/` を含む)、Zenodo の版 (v0.2.0) は本 run で WebFetch 到達確認済み。2609.30219 は 2026-09-29 に既出のため追加せず (レポートの claim 2 文は本 run で abs の逐語として照合)、Hard Stop・agent-postmortems・未判定節の 2 本も追加せず。1 点の補足 — レポートは誤った 3 つの数がどこで公表されたかに触れず、本文も媒体と日付を書かない (「On the run whose numbers were published it printed ALL CROSS-CHECKS AGREE」まで)
 
 ## 1. 突破系実践記
 
@@ -233,6 +234,10 @@
 - **Agents of Chaos** — Natalie Shapira ほか 38 名 (Bau Lab, Northeastern University ほか), arXiv:2602.20021 (2026-02-23)
   https://arxiv.org/abs/2602.20021
   OpenClaw 上で shell・email・Discord・自分で編集できる動作指示を持つ常時稼働 agent 6 体を、20 人の研究者が 2 週間 red-team した探索的研究。事例は 16 件 (https://agentsofchaos.baulab.info/) で、非所有者への従応、mail server の自壊、相互中継ループ、黙った DoS、なりすまし所有者による掌握、リンク先文書による「憲法」の汚染が並び、要旨は「agents reported task completion while the underlying system state contradicted those reports」とも書く。拒否と agent 間の安全協調の事例も同じ場所にある。端は製造されたもの (red-teaming) だが、権限の渡し方は実運用の個人 agent と同じ。cases.md 46 件目 (境界例) の本体
+
+- **Independent Verification Paths Are Not Independent: A Case Study of Common-Mode Failure in a Satellite Catalogue Pipeline** — Fabio Rovai (The Tesseract Academy), arXiv:2609.37603 (2026-09-29)
+  https://arxiv.org/abs/2609.37603
+  Python と SPARQL の 2 経路で数を突き合わせるゲートが「ALL CROSS-CHECKS AGREE」と出したまま 7 つ中 3 つの誤りを公表させた事例の検死で、2 経路が同じ定数 (出典の状態語彙の読み違い) を import していた。訂正も誤りで、pipeline が読まない phase history で照合して初めて 261 件中 42 件の人工物が見えた。読みどころは第 8 節で、Claude の 3 モデルに独立の検査経路を 75 本書かせると 72 本が同じ誤答を返し、出典の定義を prompt に入れても 30 本中 29 本 —「independence has to be specified as a property of its inputs and verified by what the check computes, not requested」。code・prompt・生の出力は https://github.com/fabio-rovai/space-object-register-ontology (`paper/gates/`)。著者自身が 1 事例・1 系統と限定する。cases.md 50 件目の本体で、節 1 の İşcan (出荷の門を外に置く側) と並べ、門そのものが共通原因で盲目になる側として読む
 
 ## 3. 生活・認知系
 
