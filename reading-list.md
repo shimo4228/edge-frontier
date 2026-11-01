@@ -26,6 +26,7 @@
 - 2026-09-22 ingest: edge line レポート 1 本 (truncating-write-seven-seconds) より +2 本。issue #95717 (本文と API のコメント 2 件) / #95414 は本 run で WebFetch 到達確認済み。#94557 は既出のため追加せず、`data-loss` ラベルの一覧は件数が動くため載せない (2026-09-03 と同じ扱い)。2 点の補正 — (1) 監査役の名 (Fable 5.1) と規則の置き場 (long-term memory) は #95717 の本文ではなく追記コメントにだけある。(2) 本文冒頭の「6 seconds after」はコメントの時刻表 (02:06:25 → 02:06:32) では 7 秒で、コメント中の「Six seconds later」は遮断された `rm` を外して書き込みを単独で再実行した間隔として出てくる
 - 2026-10-30 ingest: edge line レポート 1 本 (agent-written-tests-escape-worktree) より +6 本。issue #105342 / #103413 / #105298 / #102741 と Claude Code Docs の sub-agents / sandboxing は本 run で WebFetch 到達確認済み。`data-loss` ラベルの一覧は件数が動くため載せない (2026-09-03 と同じ扱い)。3 点の補正・補足 — (1) レポートは #105342 について「削除が止まったのは約 6 分後で、止めたのは人間だった」と書くが、本文は「stopped about 6 minutes in」とだけ書き rm を止めた主体を書かない。人間を待ったのは並行セッションの `kill -9` のほう。(2) レポートの #103413「3 つの規則」は、原文では 1 文の中の列挙と別立ての PreToolUse hook。(3) レポート作成後の 10-30 に #105342 へコメント 2 件 (its-tahir、Orend11 の 2 件目) が付いている。いずれも Anthropic 側ではない
 - 2026-09-23 ingest: edge line レポート 1 本 (JRP 版 `2026-09-23_jrp_edge.md`、後日補填回) より +7 本。論文 7 本はいずれも本 run で arXiv abs または HF papers に WebFetch 到達確認済み (2602.20021 / 2604.26091 / 2607.13083 / 2607.13070 / 2607.14340 / 2609.26087 は arXiv abs、2607.17044 は HF papers のみ)。Agents of Chaos は事例サイト agentsofchaos.baulab.info にも到達。1 点の補足 — レポートは Agents of Chaos の「完了報告と実状態の矛盾」を要旨の文として引いており、abs で逐語照合できたが、事例サイトの 16 件の一覧からは該当する個別事例を特定できなかった
+- 2026-09-25 ingest: edge line レポート 1 本 (JRP 版 `2026-09-25_jrp_edge.md`) より +2 本。arXiv 2609.26826 abs、arXiv 2605.06607 abs と HTML 本文、HF papers、GitHub は本 run で WebFetch 到達確認済み。Phantom Guardrails (2607.13083) は 2026-09-23 に既出のため追加せず、Review 節の `mohitagw15856/agent-postmortems` (2023-12〜2025-08 の既知の事例 8 件、各件 `verified: false`) も追加せず。1 点の補足 — HF papers が載せる GitHub `csml-rpi/cfd-scientist` は本 run で `csml-rpi/AI-CFD-Scientist` として表示された
 
 ## 1. 突破系実践記
 
@@ -68,6 +69,9 @@
 - **Operating-Layer Controls for Onchain Language-Model Agents Under Real Capital** — T.J. Barton ほか, DX Research Group, arXiv:2604.26091 (2026-04-28)
   https://arxiv.org/abs/2604.26091
   注意: **ベンダー資料 (運営会社が自社製品 DX Terminal Pro の本番運用を書いた論文。独立検証なし)**。3,505 体のユーザー資金 agent が実 ETH を 21 日間取引した運用で、信頼性は「emerged from the operating layer around the model」とする。読みどころは本番前に出た故障の目録 (捏造された取引規則 57% → 3%、手数料による麻痺、prompt 内の数値が slider の向きを逆転させる numeric anchoring、polling 間隔を売買シグナルと取り違える cadence trading、トークン経済の誤読) と、モデルの外に置いた guard・最小権限の operator・本番中の harness 凍結・設定から chain の結果までの trace。著者自身が 1 市場・1 モデル系統・1 回のイベントと限定を書く。cases.md 44 件目の本体。節 4 の Phantom Guardrails (実験室で捏造される規則) と対で読む
+- **AI CFD Scientist: Toward Open-Ended Computational Fluid Dynamics Discovery with Physics-Aware AI Agents** — Nithin Somasekharan ほか 6 名 (Rensselaer Polytechnic Institute), arXiv:2605.06607 (2026-05-07 v1 / 05-12 v3)
+  https://arxiv.org/abs/2605.06607
+  GPT-5.5 の agent に OpenFOAM で着想から執筆まで回させ、結果を受理する前に描画した流れ場を VLM に見せて物理的に妥当かを判定させる門を置いた記録。周期丘で Spalart-Allmaras の補正を見つけ Cf の誤差を DNS 比 7.89% 下げた。読みどころは門の測り方で、合格済みのケースに壊れを 16 個仕込むと solver 段が見逃した 14 個を捕まえ、外した 2 個は「見た目は完成している」打ち切りの収束不足だった。code と prompt は https://github.com/csml-rpi/AI-CFD-Scientist (MIT)。著者自身が backbone 1 系統・手作業の比較・「supervised scientific assistance, not unattended publication」と限定する。cases.md 47 件目の本体で、節 1 の Philipp (形式証明の検証器) と並べ、検証器が形式でない領域での門の置き方として読む
 
 ## 2. 崩壊系 post-mortem
 
@@ -356,3 +360,6 @@
 - **The Architect, the Adversary, and the Judge: Closed-Loop Generation of Standards-Aligned Assessment Items at Scale** — Wenhui Chen ほか 5 名, arXiv:2609.26087 (2026-08-26)
   https://arxiv.org/abs/2609.26087
   K-12 の試験問題生成の本番 pipeline (同じ会話の中で設計者として書き、敵対的な査読者として自分を読む。評価者の差し戻しから掘った 44,844 の修正規則を持つ) で 97.8% の合格率を報告したうえで、別ベンダーの judge 3 体で盲検の再採点をすると形式間の順位は再現するが、合否の一致は kappa 約 0.13 で judge 同士も同程度にしか一致しないと自分で書く。品質は「judge-relative」で、生徒の解答データは使っていない。LLM judge の合格率を成果として読むときの分母の問い
+- **What Makes a Terminal-Bench Task Hard? Separating Genuine Hardness from Fake-Hardness on an Adjudicated Agentic Corpus** — Edward Lue Chee Lip ほか 6 名, arXiv:2609.26826 (2026-09-20)
+  https://arxiv.org/abs/2609.26826
+  Terminal-Bench 3 / Frontier-Bench 0.1 の記録 (採点済み 639 タスク・28,801 試行) で、どのモデルも通らなかった 125 タスクのうち妥当性の審査を残るのは 78 だけとする分析。残りは oracle の破損 14・インフラ障害が支配 8・検証器の迂回でしか通らない 4・解けることの証拠不足 21 で、「a task that no model solves is not automatically a hard task」。certified-unsolved の札も「作者の解法経路が通り、インフラが支配せず、厳密な迂回が観測されず、評価した agent が全員落ちた」という狭い意味だと著者が書く。ベンチマークそのものは台帳の対象外だが、「誰も解けなかった」「解けた」を成果として読む前に検証器と oracle の側を疑う分母の問いとして、上の VibeMathed・Cyphral Distich の HN と並べて読む
