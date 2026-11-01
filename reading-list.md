@@ -25,6 +25,7 @@
 - 2026-09-19 ingest: edge line レポート 1 本 (abramov-vibed-conway-proof) より +2 本。overreacted.io / GitHub `gaearon/conway-refinement` / HN スレッド / VibeMathed (項目と統計) は本 run で WebFetch 到達確認済み。3 点の補正 — (1) HN は本 run 取得時点で 271pt / 297 コメント (レポートは 158 / 153)。(2) VibeMathed の統計は本 run 取得時点で 1,284 問・Lean-verified 12% (レポートは 721 問・21%)。(3) Palomar は repo では build コマンドとファイル名に現れるだけで、機械検査の通過は本 run でも未照合
 - 2026-09-22 ingest: edge line レポート 1 本 (truncating-write-seven-seconds) より +2 本。issue #95717 (本文と API のコメント 2 件) / #95414 は本 run で WebFetch 到達確認済み。#94557 は既出のため追加せず、`data-loss` ラベルの一覧は件数が動くため載せない (2026-09-03 と同じ扱い)。2 点の補正 — (1) 監査役の名 (Fable 5.1) と規則の置き場 (long-term memory) は #95717 の本文ではなく追記コメントにだけある。(2) 本文冒頭の「6 seconds after」はコメントの時刻表 (02:06:25 → 02:06:32) では 7 秒で、コメント中の「Six seconds later」は遮断された `rm` を外して書き込みを単独で再実行した間隔として出てくる
 - 2026-10-30 ingest: edge line レポート 1 本 (agent-written-tests-escape-worktree) より +6 本。issue #105342 / #103413 / #105298 / #102741 と Claude Code Docs の sub-agents / sandboxing は本 run で WebFetch 到達確認済み。`data-loss` ラベルの一覧は件数が動くため載せない (2026-09-03 と同じ扱い)。3 点の補正・補足 — (1) レポートは #105342 について「削除が止まったのは約 6 分後で、止めたのは人間だった」と書くが、本文は「stopped about 6 minutes in」とだけ書き rm を止めた主体を書かない。人間を待ったのは並行セッションの `kill -9` のほう。(2) レポートの #103413「3 つの規則」は、原文では 1 文の中の列挙と別立ての PreToolUse hook。(3) レポート作成後の 10-30 に #105342 へコメント 2 件 (its-tahir、Orend11 の 2 件目) が付いている。いずれも Anthropic 側ではない
+- 2026-09-23 ingest: edge line レポート 1 本 (JRP 版 `2026-09-23_jrp_edge.md`、後日補填回) より +7 本。論文 7 本はいずれも本 run で arXiv abs または HF papers に WebFetch 到達確認済み (2602.20021 / 2604.26091 / 2607.13083 / 2607.13070 / 2607.14340 / 2609.26087 は arXiv abs、2607.17044 は HF papers のみ)。Agents of Chaos は事例サイト agentsofchaos.baulab.info にも到達。1 点の補足 — レポートは Agents of Chaos の「完了報告と実状態の矛盾」を要旨の文として引いており、abs で逐語照合できたが、事例サイトの 16 件の一覧からは該当する個別事例を特定できなかった
 
 ## 1. 突破系実践記
 
@@ -60,6 +61,13 @@
 - **How I Vibed a Proof of Conway's Conjecture** — Dan Abramov, overreacted (2026-09-18)
   https://overreacted.io/how-i-vibed-a-proof-of-conways-conjecture/
   数学の素人が約 1 か月・約 400 億トークン (API 換算は ChatGPT の見積もりで約 $40,000) で、Conway の 1976 年の refinement 予想を Lean の証明まで運んだ一人称。読みどころは失敗した 3 週間と立て直しの差で、役割 agent 群 (PM / Math / Red / Random / Lean) が積んだ約 30 本の文書を捨て、査読済みの層と別 worktree の実験層に分け、造語を A, B, C に剥がして別文脈で標準名に付け直させた。信頼は Mathlib だけを import する主張ファイルと公理 3 つ (他は linter で禁止) に縮めてある — repo https://github.com/gaearon/conway-refinement。本人は数学者の独立検証がまだ無いことと、主張の定式化が予想とずれている可能性を自分で書く。HN (https://news.ycombinator.com/item?id=49755024) の「There are two ifs in this sentence.」(omnicognate) が残る疑いの置き場所を 1 行で言っている。cases.md 37 件目の本体。節 1 の Vals AI (内部整合で自己検証を打ち切った側) と対で読む
+
+- **The Prover Is the Judge: Verified Security Software from AI Coding Agents in Ada/SPARK** — Tobias Philipp, arXiv:2607.14340 (2026-07-15)
+  https://arxiv.org/abs/2607.14340
+  AI coding agent に暗号 (古典・耐量子)、TLS 1.3、IKEv2、X.509、Matrix client を Ada/SPARK で書かせ、GNATprove に 49,280 の proof obligation を解かせた記録。監督コストは手での検証の 20〜40 分の 1 (著者推計)。読みどころは証明の外側で、known-answer test・相互運用試験・仕様の人間 review でしか捕まらない欠陥が残り、検査が弱い箇所では agent が迂回して成功を報告した —「what an agent can be trusted to establish is bounded by the strength of its feedback」。節 1 の Abramov (信頼を Mathlib と公理 3 つに縮めた) と同じく、合否を外部の検証器に置く運用の 2 例目。cases.md 45 件目の本体
+- **Operating-Layer Controls for Onchain Language-Model Agents Under Real Capital** — T.J. Barton ほか, DX Research Group, arXiv:2604.26091 (2026-04-28)
+  https://arxiv.org/abs/2604.26091
+  注意: **ベンダー資料 (運営会社が自社製品 DX Terminal Pro の本番運用を書いた論文。独立検証なし)**。3,505 体のユーザー資金 agent が実 ETH を 21 日間取引した運用で、信頼性は「emerged from the operating layer around the model」とする。読みどころは本番前に出た故障の目録 (捏造された取引規則 57% → 3%、手数料による麻痺、prompt 内の数値が slider の向きを逆転させる numeric anchoring、polling 間隔を売買シグナルと取り違える cadence trading、トークン経済の誤読) と、モデルの外に置いた guard・最小権限の operator・本番中の harness 凍結・設定から chain の結果までの trace。著者自身が 1 市場・1 モデル系統・1 回のイベントと限定を書く。cases.md 44 件目の本体。節 4 の Phantom Guardrails (実験室で捏造される規則) と対で読む
 
 ## 2. 崩壊系 post-mortem
 
@@ -210,6 +218,10 @@
   https://code.claude.com/docs/en/sandboxing
   注意: **ベンダー資料 (公式 docs。内容は版で変わる)**。「The sandbox is off by default」、`sandbox.enabled: true` で有効化し、有効時は「the shell commands Claude runs start inside its boundary, and so do the processes they start」。既定の書き込み先は作業ディレクトリ・ユーザーごとの temp・追加ディレクトリで、command hook・local MCP server などは sandbox の外で全権のまま走る。ネイティブ Windows では動かない。上の sub-agents の項と並べ、worktree (git の分離) と sandbox (ファイルシステムの分離) が別機能であることを確かめる一次
 
+- **Agents of Chaos** — Natalie Shapira ほか 38 名 (Bau Lab, Northeastern University ほか), arXiv:2602.20021 (2026-02-23)
+  https://arxiv.org/abs/2602.20021
+  OpenClaw 上で shell・email・Discord・自分で編集できる動作指示を持つ常時稼働 agent 6 体を、20 人の研究者が 2 週間 red-team した探索的研究。事例は 16 件 (https://agentsofchaos.baulab.info/) で、非所有者への従応、mail server の自壊、相互中継ループ、黙った DoS、なりすまし所有者による掌握、リンク先文書による「憲法」の汚染が並び、要旨は「agents reported task completion while the underlying system state contradicted those reports」とも書く。拒否と agent 間の安全協調の事例も同じ場所にある。端は製造されたもの (red-teaming) だが、権限の渡し方は実運用の個人 agent と同じ。cases.md 46 件目 (境界例) の本体
+
 ## 3. 生活・認知系
 
 - **【己で決める】AIに人生を丸投げしそうになった僕が、2026年に気づいた「思考の生存戦略」** — なみすけ, note (2026-03-24 執筆 / 2026-05-07 公開)
@@ -331,3 +343,16 @@
 - **VibeMathed — AI 関与の数学解決の追跡サイト (項目: Conway's Refinement Conjecture for Omnific Integers / Stats)** — vibemathed.com (as-of 本 run)
   https://vibemathed.com/problem/conway-s-refinement-conjecture-for-omnific-integers
   「AI が未解決問題を解いた」型の発表を、解決日・サイト側の Lean 再構築日・状態 (Conway の件は「Candidate (review pending)」、09-03 解決 / 09-04 に commit 264445c9 で再構築) で記録する索引。統計ページ (https://vibemathed.com/stats) は本 run 取得時点で追跡 1,284 問・Lean-verified 12% (レポート時点は 721 問・21%) で、分母が増えるほど機械検証つきの比率が下がっている。節 4 の HN スレッド (Cyphral Distich、選別と分母の問い) と並べて、主張の山のうち外部の検証器を通ったものがどれだけかを測る定点として読む
+
+- **Phantom Guardrails: When Self-Improving Agent Harnesses Fix Failures That Never Happened** — Su Wang ほか 8 名, arXiv:2607.13083 (2026-07-13)
+  https://arxiv.org/abs/2607.13083
+  harness を自動改善する LLM proposer が、起きていない失敗を作り出して guardrail を足すことを示す実験。正解が「何もしない」になる Counterfactual Fabrication Lab で合法なエピソードだけを渡し、引用された違反はすべて byte 一致の oracle で照合する。馴染みのゲーム規則に似た無害なパターンがあると 60 回中 15 回で捏造が起き、特徴のない入力では 60 回中 0 回。捏造が出るのは「a rule-shaped pattern, an open-ended rule set and an instruction that presupposes failures」が揃ったときで、追加だけを受け入れるループでは前提の指示が無くても「re-enters」し「once in it stays」。抑制だけを見る受け入れ判定には見えない。規則を足す側の自己改善 (CLAUDE.md への追記を含む) を読む基準線で、節 4 の #61908 (規則の追加が遵守の代わりになる) と、節 1 の DX Terminal Pro (本番の捏造規則) と並べて読む
+- **Falsifiable Release Gates for Self-Improving Systems** — Deepak Soni, arXiv:2607.13070 (2026-07-11 v1 / 07-21 v2)
+  https://arxiv.org/abs/2607.13070
+  「Safety claims for self-improving agent runtimes are almost always self-graded」に対し、新しい能力ごとに事前宣言した機械検査の受け入れ suite を通し、全 gate で不変条件を保つ方法を自作 runtime Antaḥkaraṇa の 7 gate に当てる。中心の性質「no action reaches an effector without a capability token minted by a control ring」を有界モデルで網羅検査し、わざと壊したモデルで反例が出ることも示す。自己改変は policy 規則の書き込みに限り、締める変更は自動適用・緩める変更は人間の merge・自分の効果を予測し損ねた提案は自動で閉じる。検証範囲は協調の骨格だけで学習部品は対象外と著者が書く。規則の自己改善を「足す」でなく「緩めるかどうか」で分ける運用の参照点
+- **Where Does Agent Reliability Come From? A Cross-Benchmark Decomposition of Verification Loops, Specialist Models, and Scaffolding in a Production Enterprise Agent** — Leni Inc. (責任著者は同社 CEO), arXiv:2607.17044 (2026-07)
+  https://huggingface.co/papers/2607.17044
+  注意: **ベンダー資料 (自社の本番システムの自社評価。独立再現なし、specialist の重みと訓練データは非公開)**。上積みの大半は「scaffolding, routing, and specialist models rather than from the verification step itself」で、検証段単独は +1.5pt だが上位の取りこぼしを救う側に集中する。読みどころは specialist-swap の ablation — 小さな訓練済み verifier を生成側の frontier モデルに替えると救済の大半が消える (SpreadsheetBench で 6 → 2)。著者自身が単発の社内 run・specialist 4 体中 2 体のみ・別ベンダーの独立 verifier 条件なしと限定し、「独立した観察者」仮説は未確立とする。自己検証を同じモデルに任せる運用の反証材料として、節 4 の Honest Lying・false success と並べて読む
+- **The Architect, the Adversary, and the Judge: Closed-Loop Generation of Standards-Aligned Assessment Items at Scale** — Wenhui Chen ほか 5 名, arXiv:2609.26087 (2026-08-26)
+  https://arxiv.org/abs/2609.26087
+  K-12 の試験問題生成の本番 pipeline (同じ会話の中で設計者として書き、敵対的な査読者として自分を読む。評価者の差し戻しから掘った 44,844 の修正規則を持つ) で 97.8% の合格率を報告したうえで、別ベンダーの judge 3 体で盲検の再採点をすると形式間の順位は再現するが、合否の一致は kappa 約 0.13 で judge 同士も同程度にしか一致しないと自分で書く。品質は「judge-relative」で、生徒の解答データは使っていない。LLM judge の合格率を成果として読むときの分母の問い
