@@ -33,6 +33,7 @@
 - 2026-10-03 ingest: edge line レポート 1 本 (JRP 版 `2026-10-03_jrp_edge.md`) より +3 本。arXiv 2608.21356 abs と HTML 本文、GitHub `jyh/salt` / `jyh/saltworks`、2610.01244 abs、2608.11392 abs、2610.00015 abs は本 run で WebFetch 到達確認済み。Praxa (2610.00015) は証拠節にだけ挙がる harness の記述的 pilot で、著者自身が優位を示さないと書くため追加せず。Review 節の Runtime Contract・Xcientist (既出)・agent-postmortems、未判定節の AI CFD Scientist (既出) も追加せず。2 点の補正・補足 — (1) レポートは検証が「証明カーネルからチップの境界での等価性の機械点検までをたどる」と書くが、本文ではカーネル検査は仕様→設計成果物のつなぎ目 (Link 1) で、Verilog・ネットリストの対応は Yosys の SAT 等価検査であり、著者はこれを現状カーネルで検査できないと書く。(2) レポートが「抜粋には書かれていない」としたチップの動作は、本文に「no physical chip exists yet」とあり、シャトルの納品見込みは 2027-05-12
 - 2026-10-05 ingest: edge line レポート 1 本 (JRP 版 `2026-10-05_jrp_edge.md`) より +3 本。arXiv 2608.22752 abs と HTML 本文、2609.38761 abs、2608.19974 abs は本 run で WebFetch 到達確認済み。2607.14340 は 2026-09-23 に既出のため追加せず、Review 節の Runtime Contract・AI with Authority・Xcientist (いずれも既出) と agent-postmortems も追加せず。3 点の補足 — (1) 2609.38761 は単著 (Zhengye Han) で、レポート作成後の 2026-10-16 に v2 へ改訂されている。(2) ReguSim (2608.19974) も 2026-10-12 に v2 へ改訂され、v2 の abs は売買役のモデルを「two models」とだけ書く。レポートの claim にあるモデル名 (DeepSeek V4 Pro / Gemini 3.5 Flash) は本 run で abs から照合できていない。(3) Compaction Cliff の「5 回で 10%」は 50% 目標の要約を 5 回続けた値で、生き残りの判定は key-token の検査
 - 2026-10-08 ingest: edge line レポート 1 本 (JRP 版 `2026-10-08_jrp_edge.md`) より +4 本。arXiv 2610.07274 abs、2610.08651 abs と HTML 本文、2609.32495 abs、2609.01992 abs は本 run で WebFetch 到達確認済み。レポートは Hearsay・ClaimReceipt・Commit Gates・Tracekit を Semantic Scholar の URL で挙げていたが、本 run では Semantic Scholar の API が 429・ページが 403 のため、arXiv API の題名検索で arXiv ID を特定して abs で照合した。2610.08651 は Review 節 (採用線未満) からの採録。証拠節の Commit Gates (2609.10969) と Tracekit (2609.35659)、Review 節の Auditable Claims (2610.07459) は追加せず、Review 節の Survey・Runtime Contract・Xcientist・AI with Authority (いずれも既出) と agent-postmortems も追加せず。2 点の補足 — (1) Tracekit は 2026-10-21 に v2 へ改訂され、題は「…for AI Agents」(レポートは「…for Autonomous Coding Agents」)。v2 の abs にはレポートの claim (正規表現の門が有害な tool call 44 件中 18 件しか止めない) が無く、方針規則を「a tripwire, not the boundary」と呼び、コーパスの有害呼び出し 570 件は全部止めるが、それを見ずに書いた規則では 420 件中 211 件 (50.2%) と書く。v1 の abs は本 run で照合していない。(2) 2610.08651 の著者は運用者本人ではなく、本文は運用者への聞き取り (2026-06 と 08) と project の記録に基づく
+- 2026-10-11 ingest: edge line レポート 1 本 (JRP 版 `2026-10-11_jrp_edge.md`) より +3 本。arXiv 2610.04829 abs と HTML 本文、2610.10961 abs と HTML 本文、2610.08101 abs は本 run で WebFetch 到達確認済み。レポートは Cross-Provider Review と Hearsay を Semantic Scholar の URL で挙げていたが、Cross-Provider Review は arXiv API の題名検索で 2610.10961 を特定して abs で照合し、Hearsay は 2026-10-08 に 2609.32495 として既出のため追加せず。Review 節の AI CFD Scientist・Runtime Contract・AI with Authority・Xcientist (いずれも既出)・Auditable Claims (2610.07459) と agent-postmortems も追加せず。1 点の補足 — Viva La Vida で却下したのは GPT・承認したのは Gemini で、レポートはモデル名を書いていない。沈黙した検証は 12 回中 10 回
 
 ## 1. 突破系実践記
 
@@ -90,6 +91,9 @@
 - **A Case Study in Assuring AI-Written Software** — Lindsey Ferris (independent researcher)・Sierra Bonilla (University College London), arXiv:2610.08651 (2026-10-06)
   https://arxiv.org/abs/2610.08651
   ソフトウェア工学の訓練を持たない運用者 1 人が Claude Code を主とする coding agent 群で医療事業の本番プラットフォームを約半年運用した事例の聞き取り研究 (著者は運用者本人ではない)。読みどころは監督する側の故障の目録 — 途中の事象だけを見るバックアップ monitor、黙って止まった監査、走らなかった検査が分母から消える合格率、正当な長時間処理を故障と誤分類して業務を乱した自動修復 — と、規則集・タスク一覧・skill を毎セッション読み直し、人間が承認した教訓だけを残す運用。結論は網羅的なコードレビューを統制の唯一の根拠にできず、成果・証拠・権限・人間の判断を同じ目的に結び付けたときだけ統制が保たれたというもの。著者自身が 1 事例・1 運用者と限定する。cases.md 53 件目の本体で、節 2 の Rovai (門が共通原因で盲目になる) と並べ、検証の層が壊れる側の運用版として読む
+- **Cross-Provider Review as a Runtime Contract for Coding Agents: A Controlled Pilot and Fault-Injection Study** — Bowen Xu, Boyu Chen, arXiv:2610.10961 (2026-10-07)
+  https://arxiv.org/abs/2610.10961
+  注意: **著者が開発する runtime (OpenTerminalAgent) の評価で、著者自身が競合する利害を開示している**。coding agent の完成した回答を別プロバイダの agent に review させる契約 (資源プールの分離・権限制限・入力の完全な受け渡し・明示の失敗状態・試行ごとの証拠ほか 7 項) を置き、20 組の pilot で 8 組に実質的な指摘を得た。読みどころは review 装置自身の欠陥で、切り詰めた入力・回収中の cancel・nonzero exit がいずれも「review 完了」と数えられ、Codex は read-only でも 5 回中 5 回書き込もうとした。欠陥が見つかった shadow study の 25 件は監査用 cohort として凍結し、測定を 0 から取り直している。cases.md 55 件目の本体で、節 2 の Viva La Vida (parse 不能を「承認しない」に溶かした検証役) と並べ、判定の放棄を判定と区別する問題の coding agent 版として読む
 
 ## 2. 崩壊系 post-mortem
 
@@ -251,6 +255,10 @@
 - **The Compaction Cliff in Long-Running AI Agent Memory** — Saber Zerhoudi, Jelena Mitrović, Michael Granitzer (University of Passau), arXiv:2608.22752 (2026-08-24、CIKM 2026)
   https://arxiv.org/abs/2608.22752
   公開 GitHub の実運用 agent 設定 (AGENTS.md / CLAUDE.md / system prompt の規則) に、Claude Code の `/compact` を Sonnet 4.6 で掛けると、安全規則は要約 1 回で 53%、5 回で 10% しか残らないと数えた計測。規則と出来事の記録が同じトークン枠を同じ割合で削られるのが原因だとし、知識を 5 種に分けて規則は原文のまま残し、取り出すときは範囲内の規則を関連度より先に固定する Knowledge Triage を出す。生き残りの判定は key-token の検査で、残った文面が働くかは測っていない。cases.md 52 件目の本体で、節 4 の Guardrail Survival (文面が残っても働かない残骸) と組で読む
+
+- **Viva La Vida: Verification and Accumulation Failures in Multi-Agent Proof Search** — Benji Xu, Ken Zheng, Noah Han (UC Berkeley), arXiv:2610.04829 (2026-10-04)
+  https://arxiv.org/abs/2610.04829
+  証明支援系の無い未解決問題に自作の multi-agent prover を 3 回フル実行 (186 時間・$5,694) した検死。3 モデル全員一致の検証役は parse 不能と API エラーを「承認しない」と数えたため、12 回中 10 回の検証が故障で黙って閉じ、働いた場面では Gemini が GPT の却下した「解決」を 3 回承認し、抽出役は 93 個中 24 個の補題を反論の文脈を外して積んだ。処方は判定の放棄と却下の区別・検証役どうしの割れの保存・出どころと賛否の向きの保持。著者自身が 1 問題・3 回で信頼区間に意味が無いと書く。cases.md 54 件目の本体で、節 2 の Rovai・節 1 の Ferris ほかと並べ、検証の側が壊れる観測の証明探索版として読む
 
 ## 3. 生活・認知系
 
@@ -419,3 +427,6 @@
 - **ClaimReceipt: Verifying Evidence Sufficiency and Coverage in Agent Evaluations** — Peiying Zhu, Sidi Chang, arXiv:2609.01992 (2026-09-02、NeurIPS 2026 workshop 投稿)
   https://arxiv.org/abs/2609.01992
   評価の主張が残した証拠から計算し直せるか (十分性) と、残した記録が予定した実験全体を覆うか (網羅) を分け、署名した実験一覧に結び付けた主張ごとの受領書と、PASS / INVALID / INCONCLUSIVE を返す検証器を作った。仕様は実装前に凍結。過去の売買記録 1,392 件では手作業監査の 5 判定をすべて再現し、前向きの試験 (推論前に 30 件の割り当てを確定、最後の受領書に署名して鎖でつなぐ、非公開の証拠は監査者向けに暗号化) では、最後の受領書を 1 件隠すと網羅が INCONCLUSIVE になり、非公開の証拠をすべて隠すと金銭面の主張だけが判断不能になった — 事前登録の予測どおり。計装の負荷は推論時間の 0.021%・1 取引 9.9 KB。著者自身が、凍結した仕様も独立の読み手には曖昧さが残ると書く。方法論のため cases.md には載せない。節 1 の AI with Authority (事前登録したトークン計測) と並べ、「どの試行を数えるか」を先に固める手順の参照点
+- **Beyond Corrected Memory: Execution Consistency in Multi-Agent Systems** — Zhe Yu, Zixuan Wang, Peidong Wang, Hehai Lin, Ruochen Zhao, Chengwei Qin, arXiv:2610.08101 (2026-10-06)
+  https://arxiv.org/abs/2610.08101
+  共有メモリの記録が正しくても、agent の行動がタスクの要求を満たしたことにはならないとして、状態の使用・情報の受け渡し・最終状態の一致に対する義務と、その判定に要る証拠条件で「execution consistency」を定義する。受領・行動の依存・応答の妥当性といった証拠を統制して外すと、ラベルが逆の組の 82.4% が見分けられなくなり、戻すと 97.9% が分かれる。既存のログにはこの判定に要る実行の関係が欠けがちだとして、ログから関係を取り出す診断・回復の枠組み CAVERT を出す。統制環境での評価のため cases.md には載せない。上の Hearsay (記録の書き手を外に置く) と並べ、記録が「正しい」ことと行動が要求を満たしたことの間の隙間の参照点
