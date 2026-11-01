@@ -24,6 +24,7 @@
 - 2026-09-17 ingest: edge line レポート 1 本 (rule-written-minutes-before-broken) より +6 本。issue #94548 / #94557 / #94453 / #80579 / #61908 / #80873 は本 run で WebFetch 到達確認済み。`data-loss` ラベルの一覧は件数が動くため載せない (2026-09-03 と同じ扱い)。4 点の補正・補足 — (1) #94453 の題は「in auto mode」だが本文の環境欄は「Accept Edits was ON (auto-accepting changes)」で、Claude Code の版の欄は「v」で空。(2) レポート作成後にコメントが付いている — #94548 に 10-23 (samvallad33)、#94453 に 09-18 (iamjohn96、Bash 経由の変更は checkpoint に載らないという指摘)・10-23 (samvallad33)・10-25 (brandononchain、permissions の deny / ask 例)。いずれも Anthropic 側ではない。(3) 先行 3 件の状態: #80579 は 09-04 に bot が inactive で closed as not planned・10-31 lock、#80873 は 09-06 に bot が closed as not planned、#61908 は 06-24 に bot が closed as not planned・08-26 lock。(4) guruchill の 2 件はモデル欄が「None」でモデル未記載
 - 2026-09-19 ingest: edge line レポート 1 本 (abramov-vibed-conway-proof) より +2 本。overreacted.io / GitHub `gaearon/conway-refinement` / HN スレッド / VibeMathed (項目と統計) は本 run で WebFetch 到達確認済み。3 点の補正 — (1) HN は本 run 取得時点で 271pt / 297 コメント (レポートは 158 / 153)。(2) VibeMathed の統計は本 run 取得時点で 1,284 問・Lean-verified 12% (レポートは 721 問・21%)。(3) Palomar は repo では build コマンドとファイル名に現れるだけで、機械検査の通過は本 run でも未照合
 - 2026-09-22 ingest: edge line レポート 1 本 (truncating-write-seven-seconds) より +2 本。issue #95717 (本文と API のコメント 2 件) / #95414 は本 run で WebFetch 到達確認済み。#94557 は既出のため追加せず、`data-loss` ラベルの一覧は件数が動くため載せない (2026-09-03 と同じ扱い)。2 点の補正 — (1) 監査役の名 (Fable 5.1) と規則の置き場 (long-term memory) は #95717 の本文ではなく追記コメントにだけある。(2) 本文冒頭の「6 seconds after」はコメントの時刻表 (02:06:25 → 02:06:32) では 7 秒で、コメント中の「Six seconds later」は遮断された `rm` を外して書き込みを単独で再実行した間隔として出てくる
+- 2026-10-30 ingest: edge line レポート 1 本 (agent-written-tests-escape-worktree) より +6 本。issue #105342 / #103413 / #105298 / #102741 と Claude Code Docs の sub-agents / sandboxing は本 run で WebFetch 到達確認済み。`data-loss` ラベルの一覧は件数が動くため載せない (2026-09-03 と同じ扱い)。3 点の補正・補足 — (1) レポートは #105342 について「削除が止まったのは約 6 分後で、止めたのは人間だった」と書くが、本文は「stopped about 6 minutes in」とだけ書き rm を止めた主体を書かない。人間を待ったのは並行セッションの `kill -9` のほう。(2) レポートの #103413「3 つの規則」は、原文では 1 文の中の列挙と別立ての PreToolUse hook。(3) レポート作成後の 10-30 に #105342 へコメント 2 件 (its-tahir、Orend11 の 2 件目) が付いている。いずれも Anthropic 側ではない
 
 ## 1. 突破系実践記
 
@@ -189,6 +190,25 @@
 - **Claude Code deleted my source tree by running a recursive delete inside a OneDrive-synced folder, then told me to confirm the sync deletion dialog (#95414)** — ahmedkadir-pixel, anthropics/claude-code issue (2026-09-18)
   https://github.com/anthropics/claude-code/issues/95414
   `.next` だけを消した `Remove-Item -Recurse -Force` が OneDrive の同期キューを通って project の大半を消し、agent が 821 件の一括削除ダイアログの確認を勧めた報告。直後の `tsc` / `npm test` は非同期の削除の途中を見て通った。提案は同期ルートの検出と、一括削除ダイアログの確認を勧めない明示規則。cases.md 39 件目の本体
+
+- **[BUG] Subagent-written test ran rm -rf ~ on the real home directory, deleting all of my unpushed works; worktree isolation didn't contain it (#105342)** — raihanlh, anthropics/claude-code issue (2026-10-27)
+  https://github.com/anthropics/claude-code/issues/105342
+  `isolation: "worktree"` の subagent が書いた Rust テストの fixture (`cd && exec sh -c "$*"`) が payload「20; rm -rf ~」を本物の `$HOME` で走らせ、`cargo test` は通った報告。並行セッションの `kill -9` は分類器が「Interfere With Workloads」で拒否した。読みどころは Orend11 のコメント「the rm ran inside `cargo test` as a child process, not as a tool call the agent made. Worktree isolation only separates git checkouts.」と、本人の「A harmless marker such as touch /marker proves the same thing」。cases.md 40 件目の本体
+- **[BUG] Symlinking a sibling repo into a worktree to run a self-test let the test's rm -rf delete the real .git (#103413)** — sryh, anthropics/claude-code issue (2026-10-19)
+  https://github.com/anthropics/claude-code/issues/103413
+  agent が worktree に張った main checkout へのリンクを、self-test の BSD `cp -R` がリンクのまま一時領域へコピーし、コピー側の `.git` の `rm -rf` が本物の履歴を消した報告。事後に足した guard (symlink を含めば拒否 / rm の前に物理パスを解決し mktemp 内を要求 / `..`・末尾スラッシュ・複数対象を拒否) がそのまま手順として読める。cases.md 41 件目の本体
+- **Model-written test deleted the local repository checkout via unpatched cleanup rmtree (#105298)** — brandon-pltsci, anthropics/claude-code issue (2026-10-26)
+  https://github.com/anthropics/claude-code/issues/105298
+  内側の `with` だけで `shutil.rmtree` を偽物に差し替えた pytest で、外側の context manager の後始末が本物の `rmtree` を `temp/..` に呼び checkout ごと消えた報告。原因 4 点 (保存後の検証 / exit を覆わない patch 範囲 / `tmp_path` でない cwd / guard が外れたら何が消えるかを見ていない) が短く並ぶ。worktree は出てこない。cases.md 42 件目の本体
+- **[CLI] Worktree isolation fence covers Write/Edit but not Bash writes to the parent checkout (#102741)** — apollion69, anthropics/claude-code issue (2026-10-16)
+  https://github.com/anthropics/claude-code/issues/102741
+  worktree セッションから main checkout への `Write` / `Edit` は拒否されるが、Bash の `cp` / `sed -i` / `mv` / `rm` / リダイレクトは通るという計測と、それで 2026-08-28 に未 commit の変更を失った記録。Bash 解析器は 3 日で 249 回拒否していたのに書き込み先は見ていなかった。PostToolUse の警告は「detected, not prevented」。cases.md 43 件目の本体
+- **Create custom subagents (`isolation: worktree`)** — Claude Code Docs (as-of 2026-10-30)
+  https://code.claude.com/docs/en/sub-agents
+  注意: **ベンダー資料 (公式 docs。内容は版で変わる)**。worktree を「an isolated copy of the repository」と呼び、保証として Bash の作業ディレクトリが worktree 内にあることと git を main checkout に向けるコマンドの遮断を挙げるが、ファイルシステムの制限は書いていない。PowerShell は作業ディレクトリの検査だけ。cases.md 40〜43 件目の「隔離の意味」を読む一次
+- **Sandboxing** — Claude Code Docs (as-of 2026-10-30)
+  https://code.claude.com/docs/en/sandboxing
+  注意: **ベンダー資料 (公式 docs。内容は版で変わる)**。「The sandbox is off by default」、`sandbox.enabled: true` で有効化し、有効時は「the shell commands Claude runs start inside its boundary, and so do the processes they start」。既定の書き込み先は作業ディレクトリ・ユーザーごとの temp・追加ディレクトリで、command hook・local MCP server などは sandbox の外で全権のまま走る。ネイティブ Windows では動かない。上の sub-agents の項と並べ、worktree (git の分離) と sandbox (ファイルシステムの分離) が別機能であることを確かめる一次
 
 ## 3. 生活・認知系
 
