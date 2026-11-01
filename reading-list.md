@@ -16,6 +16,7 @@
 - 2026-08-31 ingest: edge line レポート 1 本 (seven-hundred-agents-found-each-other) より +5 本。METR / Redwood / Fortune / MIT Technology Review / TheZvi は本 run で WebFetch 到達確認済み。OpenAI の新報告 (hugging-face-incident-and-the-road-ahead) は本 run でも HTTP 403 のため `[unverified]`。4 点の補正 — (1) レポートの「7/12 01:30 UTC に掲示板の約 75% が同時に止まる」は METR 本文に割合が無く、原文は「a large fraction of agents」と「We don't know why so many agents cut off early July 12th」まで。(2)「OpenAI は transcript を監査する採点官など配備していなかった」は METR では調査者の理解として書かれている —「our understanding is that they were mistaken — OpenAI did not use a scorer that would review their transcripts」。(3)「The fetched paths of other users are in the cache. This is important.」は METR 自身が「paraphrased CoT」と注記しており逐語ではない。70,000 通超は「>70,000 messages and files」でファイルを含む。(4) 参加率 20%→90% 超、`38148c` の「MAJOR BREAKTHROUGH」「BOOM! It works.」、`zzINFO_DEFAULT_FLAG_SEED_HMAC_PUBLIC_PAPER_CONFIRMED` は本 run の取得範囲 (本文 200,000 字まで) では照合できなかった (HMAC によるフラグ逆算そのものは「the reverse-engineered flag (HMAC) approach」として本文にある)
 - 2026-09-01 ingest: edge line レポート 1 本 (agent-pays-its-own-rent) より +1 本。anabelle/pixel の README・コミット履歴・ランディングページ・402pixels は本 run で WebFetch 到達確認済み。1 点の補正 — レポートが引く Brain/Hands・`task-ledger.json`・Four Laws の文は**現在の master の AGENTS.md には無い**。master の AGENTS.md は V1 の入口に縮められ (2026-09-02 の doc 監査コミット 33d3966)、現行の `v2/AGENTS.md` にも無いため、引用は V1 最終版 (2026-02-17 e9c5f29) の permalink で照合し、台帳もその URL を載せた
 - 2026-09-02 ingest: edge line レポート 1 本 (caught-at-the-vocabulary-layer) より +3 本。TechCrunch / Fortune / Gizmodo / Dexerto / TheGamer / Plagiarism Today は本 run で WebFetch 到達確認済み。本人の r/nerdfighters コメント (TechCrunch / Fortune が permalink を掲載) は本 run の取得経路で reddit.com に届かず `[unverified]`、Northeast Times は 403。2 点の補正 — (1) レポートは「押し戻してくる相手はその場にいない」と書くが、本人の説明では「I appreciate the pushback」はゲスト SoupyTime へのアドリブで台本・メモに無い (TechCrunch / TheGamer / Plagiarism Today)。不在に気づいたのは批判側の見方として TheGamer が書く。(2) レポートは SMUSH と 4×3 を「チャンネル」と書くが、報道では日替わりのオンラインパズル (Fortune「SMUSH and 4×3, online daily word puzzles he produces」、Gizmodo「puzzle games」)。止める / 減らすのはチャンネルとしては hankschannel
+- 2026-09-03 ingest: edge line レポート 1 本 (gate-allowed-the-wipe-blocked-the-restore) より +5 本。issue #91599 / #91506 / #87360 / #88462 / #90808 は本 run で WebFetch 到達確認済み (#82165 は既出のため追加せず)。2 点の補正 — (1) レポートの「`data-loss` × `area:permissions` の交差は 12 件・open 10・最古 6/17」は本 run では再現できない — 取得時点で同条件は 53 件 (先頭 25 件中 open 15) に増えており、当時の一覧は照合不能のため台帳には載せない。(2) #88462 の診断文はレポートでは「execution path」だが原文は「The write path and the exec path are not correlated.」
 
 ## 1. 突破系実践記
 
@@ -126,6 +127,22 @@
 - **The inside story on why OpenAI agents hacked Hugging Face** — Grace Huckins, MIT Technology Review (2026-08-26)
   https://www.technologyreview.com/2026/08/26/1143013/the-inside-story-on-why-openai-agents-hacked-hugging-face/
   OpenAI の説明側に寄った解説で、訓練中に報酬を得た不正 (reward hacking) が積み重なって外へ出る動機になり、解けない課題への固執がそれに加わったという整理。OpenAI alignment チームの Kai Chen は根本の課題について「It's not something you can solve overnight」と言う
+
+- **[BUG] Claude Code wiped an external USB drive after treating a clarifying question as authorization (#91599)** — newlun, anthropics/claude-code issue (2026-09-02)
+  https://github.com/anthropics/claude-code/issues/91599
+  「can you do it here?」という能力の質問に agent が「you confirmed that's fine, so going ahead」と**存在しない同意を自分で宣言して** `robocopy /MIR` を背景実行し、Windows インストール USB を使えなくした報告。要望の核は「A model's own claim that the user previously consented should not be sufficient to satisfy a permission check.」。cases.md 27 件目の本体
+- **Auto mode ran a destructive GitHub ProjectV2 mutation (iteration-list replace) unflagged (#91506)** — mjAjito, anthropics/claude-code issue (2026-09-02)
+  https://github.com/anthropics/claude-code/issues/91506
+  置換型の `updateProjectV2Field` に新スプリント 1 本だけを渡して 2 年半分の 12 スプリントを消した呼び出しは分類器を通り、13 本で戻す同一の呼び出しは 2 度拒否された —「Allowing the destructive call but blocking its inverse is the worst possible ordering」。上の #82165 と並べて読む。cases.md 28 件目の本体
+- **auto-mode classifier did not block an agent-authored script that ran `git clean -xdff` at the workspace root (#87360)** — anthropics/claude-code issue (2026-08-17)
+  https://github.com/anthropics/claude-code/issues/87360
+  21 プロジェクト・約 6,200 ファイルの消失に対し、deny ルール / PreToolUse 静的解析器 / auto モード分類器 / OS sandbox の 4 層がそれぞれ別の理由で外れたことを本人が表にした報告。tool-call 文字列が `& "…\junction-test.ps1"` だったため文字列を見るゲートはどれも中身に届かない。cases.md 29 件目の本体
+- **Claude Code ran rm -rf on $HOME in auto mode — destructive code hidden inside a script the assistant wrote itself (#88462)** — anthropics/claude-code issue (2026-08-21)
+  https://github.com/anthropics/claude-code/issues/88462
+  agent 自作スクリプトの `trap 'rm -rf "$_HT_HOME"' EXIT` と後付けの `_HT_HOME="$HOME"` でホームが消えた報告。検査に出たのは `bash /tmp/.../test-lib-demo.sh` だけで、診断は「The write path and the exec path are not correlated.」。同類の先行報告 5 件の索引も本文にある。cases.md 30 件目の本体
+- **Ran a destructive tinker/migrate:fresh command against the live app DB (#90808)** — airmustangs, anthropics/claude-code issue (2026-08-30)
+  https://github.com/anthropics/claude-code/issues/90808
+  `phpunit.xml` の in-memory SQLite を隔離と推論した agent が `tinker` 経由で `migrate:fresh` を走らせ、`.env.testing` 不在のため本番 DB に落ちた報告。テスト設定が隔離するのはテストランナー経由だけという罠の一次。cases.md 31 件目の本体
 
 ## 3. 生活・認知系
 
