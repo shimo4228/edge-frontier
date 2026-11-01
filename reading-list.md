@@ -38,6 +38,7 @@
 - 2026-10-17 ingest: edge line レポート 1 本 (JRP 版 `2026-10-17_jrp_edge.md`) より +3 本。arXiv 2610.21177 abs、2610.21570 abs と HTML 本文、GitHub `KrishnaKumarVedantam/AMBU-CovAgent`、2609.04043 abs と HTML 本文、GitHub `mit-pdos/xv6iris` は本 run で WebFetch 到達確認済み。2609.04043 は Review 節 (採用線未満) からの採録。2609.38761 は 2026-10-05 に既出のため追加せず、Review 節の残り 8 本 (いずれも既出か既に不採) も追加せず。2 点の補足 — (1) レポートの claim 3 文 (2610.21177 の 48 views / 36 faults、2610.21570 の (a)(b) 2 文) は本 run で abs の逐語として照合した。(2) 2609.04043 の HTML 本文は本 run の取得で §8 の途中までしか読めず、agent の使い方を扱う §10 は未照合
 - 2026-10-23 ingest: edge line レポート 1 本 (JRP 版 `2026-10-23_jrp_edge.md`) より +3 本。arXiv 2610.28667 abs と GitHub `besionisrael/assure-harness`、2610.28989 abs、2608.05810 abs と HF papers は本 run で WebFetch 到達確認済み。AI CFD Scientist (2605.06607) は 2026-09-25 に既出のため追加せず、Review 節の 6 本 (Survey・Runtime Contract・AI with Authority・Auditable Claims・xv6 検証は既出または既に不採、agent-postmortems) と未判定節の Xcientist (既出) も追加せず。2 点の補足 — (1) 2608.05810 はレポートの Claims 節にだけ挙がる出典で、claim 2 文は本 run で abs の逐語として照合した。HF papers の表示は著者 6 名・2026-09-18 だが、arXiv abs では筆頭に Linfang Shang が加わる 7 名で、v1 2026-08-06 / v2 2026-09-17。(2) 2610.28667 の README には、レポートに無い Inspect 版の評価 (Claude Sonnet 5.5 95.2% / GPT-5.5 85.7%) がある
 - 2026-10-26 ingest: edge line レポート 1 本 (JRP 版 `2026-10-26_jrp_edge.md`) より +3 本。arXiv 2610.30216 abs・HTML 本文と GitHub `QudeLeap/Lean-QuantumAlg`、2601.03315 abs・HTML 本文と GitHub `Lossfunk/ai-scientist-artefacts-v1`、2610.11754 abs は本 run で WebFetch 到達確認済み。レポートは What Output-Only Review Cannot Verify を Semantic Scholar の URL で挙げていたが、arXiv API の題名検索で 2610.11754 を特定し、claim の数 (104 / 144・棄権 32・途中終了 8) を abs で照合した。Hearsay (2609.32495)・ClaimReceipt (2609.01992) は 2026-10-08 に既出、Commit Gates (2609.10969) は 2026-10-08 と同じく追加せず、Review 節の残り 6 本 (既出または既に不採) と未判定節の Actions with Receipts も追加せず。2 点の補足 — (1) 2610.30216 と 2601.03315 はいずれもレポートの Review 節に題だけ挙がる出典 (採用線未満) で、本文と claim は無い。(2) Lean-QuantumAlg は使った agent・モデル名を本文に書かず、付録 D の迂回例は実験の結果でない仮想例と著者が断る
+- 2026-10-29 ingest: edge line レポート 1 本 (JRP 版 `2026-10-29_jrp_edge.md`) より +4 本。arXiv 2609.12017 abs と HTML 本文、2610.32578 abs と HTML 本文と GitHub `avtak/divan`、2610.36476 abs、2610.31352 abs と HTML 本文 (先頭 100,000 字) は本 run で WebFetch 到達確認済み。レポートは Praxa の監査を Semantic Scholar の URL で挙げていたが、arXiv API の題名検索で 2609.12017 を特定し、claim の数を abs で照合した。2610.31352 はレポートの Review 節 (採用線未満) に題だけ挙がる出典。Review 節の残り 6 本と未判定節の 5 本は追加せず。2 点の補足 — (1) Lessons Outlive の実行時間の見積もり規則のシナリオでは Sonnet 5.5 が全ランでタスクを断っており、文章規則が効かなかったという観測は Sonnet 4.5 だけのもの。(2) 2610.31352 は unitary synthesis の削減を abs と §3.4 で 50〜73%、序論で「up to 66%」と書き、本文はこの食い違いを解消していない
 
 ## 1. 突破系実践記
 
@@ -104,6 +105,12 @@
 - **Lean-QuantumAlg: A Framework for AI Agents to Produce Quantum Algorithms that Humans Can Trust** — Lei Zhang, Mingrui Jing, Yusheng Zhao, Jiahong Liu, Xin Wang, arXiv:2610.30216 (2026-10-21 v1 / 10-23 v2)
   https://arxiv.org/abs/2610.30216
   正しさ・成功確率・借りた状態の復元・資源上限を 1 回の実行についての 1 つの契約に束ねた Lean 4 枠組みで、AI agent に Grover 探索から RSA-2048 / P-256 への量子攻撃まで 9 本を形式化させた記録。読みどころは人間が読む量の測り方で、共有枠組みを監査済みとすれば主張水準の review が要る source 行は各アルゴリズムで 1% 未満、枠組みを信頼しなければ最大約 12% と、信頼する層ごとに出している。使った agent 名・期間・費用は書かれず、agent の迂回は実験の観測でなく仮想例のみ。code は https://github.com/QudeLeap/Lean-QuantumAlg (Apache-2.0)。cases.md 57 件目の本体。節 1 の Abramov・Philipp・AI with Authority・xv6 と同じく合否を外部の検証器に置く運用で、検証の外に残る範囲を数で示した例
+- **Lessons Outlive Their Failures: A Case Study of Rules for AI Coding Agents** — Hassan Hassanzadeh Aliabadi, arXiv:2610.32578 (2026-10-23)
+  https://arxiv.org/abs/2610.32578
+  Claude Code・Antigravity・headless のサーバー agent が 1 つの規則セット (AGENTS.md・skill 11 本・pre-tool / post-edit hook・決定的な検査 17 個の lint・月 1 回の LLM 文書監査) のもとで毎日編集する個人 repo を 6 週間運用し、失敗 118 件を台帳に付けた単著。最大の型は文書の陳腐化 48 件で、LLM 監査は既知の陳腐化の約半分を高い精度で拾う。過去の失敗 5 件を修正あり / なしで再生すると、新しいモデルでは多くが修正なしでも起きず、再発した 1 件 (件数の陳腐化) を止めたのは lint で、文章の見積もり規則は効かなかった。処方は、教訓にモデルの版と再試験日を付け、教訓なしで再生して効かなくなった規則を退役させること。公開テンプレートは https://github.com/avtak/divan (MIT)。著者自身が 1 repo・各条件 3 ランの探索的結果と書く。cases.md 60 件目の本体で、節 1 の Ferris ほか (承認した教訓だけを残す) と並べ、溜めた教訓を退役させる側として読む
+- **Automating quantum circuit optimization with AI agents** — Marcos Crichigno, Steve Flammia, arXiv:2610.31352 (2026-10-22)
+  https://arxiv.org/abs/2610.31352
+  研究者と challenge 構築役の agent が、解が出る前に解ける場合・壊した成果物・公表値で検証した厳密な evaluator を SHA-256 で凍結し、Claude 系の coding agent 群に program とノートの組を提出させて改善だけを残す autoresearch loop。検証の門は agent が書いた検証器の欠陥 2 件と公表値の非最適を捕まえ、約 6 週間で 19 件を受理し、fermion-to-qubit encoding・Hamiltonian layout・unitary synthesis で既存の参照比 37〜73% のコスト減を出した。費用・トークン量は報告されず、却下された提出は記録されないので迂回の試みの有無は分からない。cases.md 61 件目の本体。節 1 の Abramov・Philipp・xv6・Lean-QuantumAlg と同じく合否を外部の検証器に置く運用で、検証器そのものを先に検証した例
 
 ## 2. 崩壊系 post-mortem
 
@@ -273,6 +280,10 @@
 - **Why LLMs Aren't Scientists Yet: Lessons from Four Autonomous Research Attempts** — Dhruv Trehan, Paras Chopra (Lossfunk), arXiv:2601.03315 (2026-01-06)
   https://arxiv.org/abs/2601.03315
   Gemini 2.5 Pro の 6 module と Claude Code の実装・執筆で ML 研究を 4 案各 1 回 (1 GPU・6 時間) 走らせ、3 案が実装・評価段で落ち 1 案が Agents4Science 2025 に境界線上で採択された運用者自身の検死。失敗を学習データの既定への回帰・timeout 下の実装の漂流・記憶の劣化・失敗を成功と報告する過剰な興奮・領域知識の不足・科学的センスの弱さの 6 型にまとめ、評価を LLM の要約でなく生のログに当てるなど 4 原則を出す。自律度 95% 超の自己評価の手前に、人間の停止判断と 2 回の共同編集がある。prompt と案ごとの成果は https://github.com/Lossfunk/ai-scientist-artefacts-v1。cases.md 58 件目の本体で、節 1 の AI CFD Scientist・Xcientist と並べ、AI scientist 系の失敗側として読む
+
+- **When Agent Metrics Measure Different Things: An Evidence-Grounded Audit of the Praxa AI Pipeline** — Stefan G. Creadore, Peyton Woakz, arXiv:2609.12017 (2026-09-10)
+  https://arxiv.org/abs/2609.12017
+  注意: **ベンダー資料 (運営者自身による自社 pipeline の監査で、監査対象の repo は非公開)**。過去の評価成果物と運用記録を事後に監査し、数値は正しいのに指標名が示すものと別のものを測っていた 3 つの形を数える — 既知の欠落をゲートから除外したため 139 件中 27 件の失敗がありながらゲート失敗 0、32 bit 上限への clamp が混ざって p99 が 2,147,483,647 ms になった時間の欄、分母の取り方で 94.39% と 46.54% に分かれる compaction の削減。処方は、集計前に分析単位・event の意味・終端状態などを決める measurement contract。著者自身が 1 つの非公開 system・単一軌跡と限定する。cases.md 59 件目の本体で、節 1 の Ferris ほか (走らなかった検査が分母から消える合格率) と並べ、監督の数え方が壊れる観測として読む
 
 ## 3. 生活・認知系
 
@@ -468,3 +479,6 @@
 - **What Output-Only Review Cannot Verify: Study Contracts for Research Agents** — Eitan Waks, Ben Glocker, arXiv:2610.11754 (2026-10-08、preprint)
   https://arxiv.org/abs/2610.11754
   AI が生成した研究について、事前に宣言した実験の選択・実行の義務・主張の範囲を実行の記録に結び付ける「study contract」を出し、検証を科学的な真偽でなく契約に対する相対的なものとして扱う。clean / 改変の 8 組の診断では決定的な検査器が登録した改変 8 件をすべて検出し、組の文脈と故障ラベルを除いた資料を 1 つずつ渡された 18 の判定器別名は「104 of 144 mutated evaluation cases received defect flags」で、残りは棄権 32 件と途中終了 8 件、改変を「問題なし」とした判定は無かった。一部の資料には承認・実行の欄 (digest を含む) が残っていた。著者自身が、権威ある情報の効果をタスク仕様や規則選択の差から切り分けておらず、判定器の比較や agent の reward hacking の測定ではないと書く。開発設定での評価のため cases.md には載せない。上の Hearsay (記録の書き手を外に置く)・ClaimReceipt (主張ごとの受領書) と並べ、成果物だけの review で決まらない欠陥を宣言と記録の突き合わせに移す参照点
+- **FIDES-Live: Evaluating Behavioral Concordance in Sequential Trading Agents** — Arther Tian, Alex Ding, Simon Wu, Aaron Chan, arXiv:2610.36476 (2026-10-27)
+  https://arxiv.org/abs/2610.36476
+  逐次の売買 agent が出す判断・注文・約定の受領書・口座状態・報告が互いに整合するかを、判断の妥当性・数値の約束の遵守・約定と台帳の照合・受領書に基づく報告に分け、採点不能を明示の結果として数える監査 protocol。実市場データと模擬約定で 10 の推論経路・暗号資産 7,299 口座ラウンド (ほかに株式 310 ラウンドの pilot) を事後に監査し、採点可能な応答で判断の妥当性 97.35%・報告の正確さ 90.81%、経路ごとの差は大きい。約束の遵守は全体 94.36% だが、空でない注文案に付いた制約では 62.63% に落ちる (有効な空の注文案では 97.56%)。実資金は使っておらず、長期の売買能力・説明の意味的忠実さ・監査の因果効果は示さないと著者が書く。模擬約定上の評価のため cases.md には載せない。節 1 の DX Terminal Pro (実資金の運用) と並べ、集計値の下で経路ごとに判断と報告が割れることと、整合・証拠の被覆・活動量・損益を分けて報告する根拠として読む
