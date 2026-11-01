@@ -18,6 +18,7 @@
 - 2026-08-28 ingest (edge line レポート 1 本より): 台帳 +2 件 — 崩壊 2 (EN 2)
 - 2026-08-29 ingest (edge line レポート 1 本より): 台帳 +2 件 — 崩壊 2 (EN 2)
 - 2026-08-30 ingest (edge line レポート 1 本より): 台帳 +4 件 — 崩壊 4 (EN 3 / PT 1)
+- 2026-08-31 ingest (edge line レポート 1 本より): 台帳 +0 件 — なし (主題の METR / Redwood 調査は台帳 17 件目 Hugging Face 侵入の続報のため新行にせず、扱いは人間判断へ回した)
 
 ## 台帳
 
