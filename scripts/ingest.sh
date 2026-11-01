@@ -43,7 +43,8 @@ PY
 
 REPORTS=()
 while IFS= read -r f; do [ -n "$f" ] && REPORTS+=("$f"); done \
-  < <(find "$REPORT_DIR" -maxdepth 1 -name "${DATE}_edge_*.md" 2>/dev/null | sort)
+  < <(find "$REPORT_DIR" -maxdepth 1 \( -name "${DATE}_edge_*.md" -o -name "${DATE}_jrp_edge.md" \) 2>/dev/null | sort)
+# 手書き版は `<date>_edge_<slug>.md`、JRP 版 (frontmatter `line: edge`) は `<date>_jrp_edge.md`
 
 if [ "${#REPORTS[@]}" -eq 0 ]; then
   log "no edge report for $DATE — nothing to do"
